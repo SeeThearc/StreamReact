@@ -1,0 +1,72 @@
+.plan {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 30px;
+    width: 300px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .plan:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .plan.popular {
+    background: rgba(146, 17, 155, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(146, 17, 155, 0.3);
+    position: relative;
+  }
+  
+  .plan.popular::before {
+    content: "Popular";
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: rgb(146, 17, 155);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  
+  .plan h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .price {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: rgb(146, 17, 155);
+  }
+  
+  .plan ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+  }
+  
+  .plan li {
+    padding: 10px 0;
+  }
+  
+  .plan button {
+    background: radial-gradient(rgb(168, 76, 161), rgb(129, 8, 138));
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .plan button:hover {
+    transform: scale(1.05);
+    background: radial-gradient(rgb(188, 86, 181), rgb(149, 18, 158));
+  }
+  

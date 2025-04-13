@@ -1,0 +1,45 @@
+.success-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(rgb(1, 2, 49), rgb(0, 0, 0));
+    color: #ccc;
+  }
+  
+  .subscription-container {
+    max-width: 800px;
+    padding: 20px;
+    color: #ccc;
+  }
+  
+  .subscription-container h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .subscription-container p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #ccc;
+    text-align: center;
+  }
+  
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+  }
+  
+  .action-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .action-container button {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+  }
+  

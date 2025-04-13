@@ -1,0 +1,171 @@
+.home-page {
+  background-color: #000;
+  color: white;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.head-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo p {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.head-options {
+  display: flex;
+  gap: 20px;
+}
+
+.head-opt {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.head-opt:hover {
+  color: rgb(146, 17, 155);
+}
+
+.head-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.head-logo {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.pro {
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Fixed banner styles */
+.banner {
+  height: 80vh;
+  /* Remove the fixed background-image from CSS */
+  /* background-image: url('/assets/images/yjhd.jpg'); */
+  background-size: cover;
+  background-position: center top;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 50px;
+  position: relative;
+  margin-top: 0; /* Ensure there's no extra margin */
+  width: 100%; /* Ensure full width */
+}
+
+.banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent 70%);
+  z-index: 1; /* Ensure gradient is above the background but below the content */
+}
+
+.banner-content {
+  position: relative;
+  padding-bottom: 50px;
+  max-width: 600px;
+  z-index: 2; /* Ensure content is above the gradient */
+}
+
+.banner-content h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+.banner-content h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.banner-content p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #ccc;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.play-btn, .info-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.play-btn {
+  background: white;
+  color: black;
+}
+
+.info-btn {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.play-btn:hover, .info-btn:hover {
+  background: rgb(146, 17, 155);
+  color: white;
+}
+
+/* Main content area needs proper spacing from fixed header */
+.main-content {
+  padding-top: 70px; /* Adjust based on your header height */
+}
+
+/* Featured content section should be full width */
+.featured-content {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .head-options {
+    margin-top: 20px;
+  }
+
+  .banner-content h1 {
+    font-size: 36px;
+  }
+}

@@ -1,0 +1,96 @@
+.custom-select {
+    position: relative;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 15px;
+  }
+  
+  .select-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .select-header:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  
+  .select-header.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: rgba(146, 17, 155, 0.2);
+  }
+  
+  .select-value {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .select-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .select-header.open .select-arrow {
+    transform: rotate(180deg);
+  }
+  
+  .select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background: rgba(30, 30, 40, 0.95);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .select-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .select-option:hover {
+    background: rgba(146, 17, 155, 0.2);
+  }
+  
+  .select-option.selected {
+    background: rgba(146, 17, 155, 0.3);
+  }
+  
+  .checkbox {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+    margin-right: 10px;
+    text-align: center;
+    line-height: 18px;
+    font-size: 12px;
+  }
+  
+  .custom-select.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .custom-select.disabled .select-header {
+    cursor: not-allowed;
+  }
+  

@@ -1,0 +1,41 @@
+.plans-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(rgb(1, 2, 49), rgb(0, 0, 0));
+    color: #fff;
+  }
+  
+  .subscription-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  .subscription-container h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .subscription-container > p {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    color: #ccc;
+  }
+  
+  .plans {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  @media (max-width: 768px) {
+    .plans {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
