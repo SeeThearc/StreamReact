@@ -17,7 +17,7 @@ const MyListPage = () => {
   const searchResultsRef = useRef(null);
 
   // API configuration
-  const API_KEY = 'd727dfd30a34d9430f9e70f7d07d6c81';
+  const API_KEY = import.meta.env.VITE_API_KEY;
   const BASE_URL = 'https://api.themoviedb.org/3';
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import MovieSlider from '../../components/MovieSlider/MovieSlider';
 import Footer from '../../components/Footer/Footer';
 import TrailerModal from '../../components/TrailerModal/TrailerModal';
 import './MoviesPage.css'; // You'll need to create this CSS file
+import Header from '../../components/Header/Header';
 
 const MoviesPage = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const MoviesPage = () => {
   const searchResultsRef = useRef(null);
 
   // API configuration
-  const API_KEY = 'd727dfd30a34d9430f9e70f7d07d6c81';
+  const API_KEY = import.meta.env.VITE_API_KEY;
   const BASE_URL = 'https://api.themoviedb.org/3';
   const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
   const BACKDROP_BASE_URL = 'https://image.tmdb.org/t/p/original';
@@ -230,67 +231,16 @@ const MoviesPage = () => {
 
   return (
     <div className="movies-page">
-      <div className="header">
-        <div className="head-left">
-          <div className="logo">
-            <p style={{ color: "rgb(146, 17, 155)" }}>Stream</p>
-            <p style={{ color: "#fff" }}>Sphere.</p>
-          </div>
-          <div className="head-options">
-            <Link to="/home" className="head-opt">Home</Link>
-            <Link to="/movies" className="head-opt active">Movies</Link>
-            <Link to="/webseries" className="head-opt">Web Series</Link>
-            <Link to="/mylist" className="head-opt">My List</Link>
-          </div>
-        </div>
-        <div className="head-right">
-          <div className="search-container">
-            <form onSubmit={handleSearch} className="search-form">
-              <input
-                type="text"
-                placeholder="Search movies..."
-                value={searchQuery}
-                onChange={handleSearchInputChange}
-                className="search-input"
-              />
-              <button type="submit" className="search-button">
-                <i className="fa-solid fa-magnifying-glass" style={{ color: "white" }}></i>
-              </button>
-            </form>
-            
-            {showSearchResults && searchResults.length > 0 && (
-              <div className="search-results" ref={searchResultsRef}>
-                {searchResults.map((movie) => (
-                  <div 
-                    key={`${movie.mediaType}-${movie.id}`} 
-                    className="search-result-item"
-                    onClick={() => playMovie(movie)}
-                  >
-                    <img 
-                      src={movie.image} 
-                      alt={movie.title} 
-                      className="search-result-image" 
-                    />
-                    <div className="search-result-info">
-                      <h4>{movie.title}</h4>
-                      <p>{movie.duration} • {movie.genres}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          
-          <i className="fa-solid fa-bell head-logo" style={{ color: "white" }}></i>
-          <img src="/assets/images/profile.png" alt="profile" height="40px" className="pro" />
-          <i className="fa-solid fa-caret-down head-logo" style={{ color: "white" }}></i>
-          <i 
-            className="fa-solid fa-right-from-bracket" 
-            style={{ color: "blueviolet", cursor: "pointer", marginRight: "10px" }} 
-            onClick={redirectToSignOut}
-          ></i>
-        </div>
-      </div>
+      <Header
+  searchQuery={searchQuery}
+  onSearchChange={handleSearchInputChange}
+  onSearchSubmit={handleSearch}
+  searchResults={searchResults}
+  showSearchResults={setShowSearchResults}
+  playShow={playMovie}
+  searchPlaceholder="Search movies..."
+/>
+
 
       {isLoading ? (
         <div className="loading" style={{ color: 'white', textAlign: 'center', padding: '50px' }}>
