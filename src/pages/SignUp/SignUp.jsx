@@ -4,15 +4,14 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import Footer from "../../components/Footer/Footer";
 
-// Importing Logo component - we'll create a placeholder that matches your existing logo
 const Logo = () => (
   <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    DIMENSION
+    StreamSphere
   </div>
 );
 
-// Basic Button component that matches your existing Button
 const Button = ({ type, className, children }) => (
   <button
     type={type}
@@ -22,7 +21,6 @@ const Button = ({ type, className, children }) => (
   </button>
 );
 
-// Navbar placeholder - simplified version that matches the original landing page
 const Navbar = () => (
   <nav className="px-6 py-4 flex justify-between items-center">
     <div className="flex items-center">
@@ -37,20 +35,6 @@ const Navbar = () => (
       </a>
     </div>
   </nav>
-);
-
-// Footer component
-const Footer = ({ marginTop }) => (
-  <footer className="py-8 px-6 bg-black" style={{ marginTop }}>
-    <div className="max-w-6xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-center">
-        <Logo />
-        <p className="text-gray-500">
-          © 2025 Dimension Streaming. All rights reserved.
-        </p>
-      </div>
-    </div>
-  </footer>
 );
 
 export default function SignUp() {
@@ -193,7 +177,7 @@ export default function SignUp() {
         </div>
       </main>
 
-      <Footer marginTop="60px" />
+      <Footer />
     </div>
   );
 }

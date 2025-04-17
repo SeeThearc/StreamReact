@@ -69,7 +69,7 @@ const PlansPage = () => {
           </div>
         </div>
       </main>
-      <Footer marginTop="145px" />
+      <Footer />
     </div>
   );
 };

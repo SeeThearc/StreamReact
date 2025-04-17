@@ -106,7 +106,7 @@ export default function StreamingPlatform() {
       <nav className="relative z-50 px-6 py-4 flex justify-between items-center">
         <div className="flex items-center">
           <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-            DIMENSION
+            StreamSphere
           </div>
         </div>
 
@@ -201,11 +201,10 @@ export default function StreamingPlatform() {
 
         <div className="relative z-10 text-center max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-            Immersive 3D Streaming Experience
+          Your Universe of Entertainment
           </h1>
           <p className="text-xl md:text-2xl mb-12 text-gray-300">
-            Dive into a new dimension of entertainment with cutting-edge 3D
-            technology
+          From thrilling originals to blockbuster hits — stream it all in one place.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
@@ -327,10 +326,9 @@ export default function StreamingPlatform() {
                   ></path>
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-3">True 3D Experience</h3>
+              <h3 className="text-xl font-bold mb-3">AI-Powered Personalized Streaming</h3>
               <p className="text-gray-400">
-                Immerse yourself in cutting-edge 3D technology that brings films
-                to life like never before.
+              StreamSphere learns what you love and curates content that matches your vibe — no more endless scrolling.
               </p>
             </div>
 
@@ -392,8 +390,7 @@ export default function StreamingPlatform() {
             Ready to Experience the Future of Streaming?
           </h2>
           <p className="text-xl text-gray-300 mb-8">
-            Join thousands of users already enjoying our immersive 3D content
-            library.
+            Join thousands of users already enjoying our Universe
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
