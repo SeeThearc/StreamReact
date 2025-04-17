@@ -509,6 +509,7 @@ export default function PlansPage() {
           <StripeCheckoutForm selectedPlan={selectedPlan} onBack={handleBack} />
         )}
       </main>
+      <Footer />
 
       <Footer marginTop={selectedPlan ? "60px" : "80px"} />
     </div>

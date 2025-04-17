@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, Lock, Eye, EyeOff } from "lucide-react";
+import Footer from "../../components/Footer/Footer";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -11,7 +12,7 @@ import { toast } from "react-toastify";
 // Logo component that matches our existing branding
 const Logo = () => (
   <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    DIMENSION
+    StreamSphere
   </div>
 );
 
@@ -40,20 +41,6 @@ const Navbar = () => (
       </a>
     </div>
   </nav>
-);
-
-// Footer component
-const Footer = ({ marginTop }) => (
-  <footer className="py-8 px-6 bg-black" style={{ marginTop }}>
-    <div className="max-w-6xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-center">
-        <Logo />
-        <p className="text-gray-500">
-          © 2025 Dimension Streaming. All rights reserved.
-        </p>
-      </div>
-    </div>
-  </footer>
 );
 
 export default function Login() {
@@ -284,7 +271,7 @@ export default function Login() {
             <div>
               <h3 className="font-bold text-sm mb-1">Secure Login</h3>
               <p className="text-xs text-gray-300">
-                Your connection to Dimension streaming is encrypted and secure.
+                Your connection to StreamSphere is encrypted and secure.
                 We never share your personal information.
               </p>
             </div>
@@ -292,7 +279,7 @@ export default function Login() {
         </div>
       </main>
 
-      <Footer marginTop="60px" />
+      <Footer/>
     </div>
   );
 }
