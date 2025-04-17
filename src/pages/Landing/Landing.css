@@ -1,339 +1,344 @@
 .landing-page {
-    background: radial-gradient(rgb(1, 2, 49), rgb(0, 0, 0));
-    color: white;
-    min-height: 100vh;
-  }
-  
-  header {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  
-  .clipart {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40%;
-    z-index: 0;
-    opacity: 0.7;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 450px;
-    padding: 40px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    z-index: 1;
-  }
-  
-  .auth-container {
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  .auth-container h2 {
-    font-size: 32px;
-    margin-bottom: 28px;
-    text-align: center;
-  }
-  
-  .auth-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .auth-container input {
-    padding: 16px;
-    border-radius: 4px;
-    border: none;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-  }
-  
-  .auth-container button {
-    padding: 16px;
-    border: none;
-    border-radius: 4px;
-    background: rgb(146, 17, 155);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .auth-container button:hover {
-    background: rgb(168, 76, 161);
-  }
-  
-  .help-section {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    color: #aaa;
-  }
-  
-  .help-section a {
-    color: #aaa;
-    text-decoration: none;
-  }
-  
-  .help-section a:hover {
-    text-decoration: underline;
-  }
-  
-  .auth-container p {
-    margin-top: 16px;
-    text-align: center;
-    font-size: 14px;
-  }
-  
-  .auth-container a {
-    color: rgb(146, 17, 155);
-    text-decoration: none;
-  }
-  
-  .intro-section {
-    padding: 50px 20px;
-  }
-  
-  .intro-section h1 {
-    text-align: center;
-    padding: 50px 0;
-    font-size: 2.5rem;
-  }
-  
+  background: radial-gradient(rgb(1, 2, 49), rgb(0, 0, 0));
+  color: white;
+  min-height: 100vh;
+}
+
+header {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.clipart {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.auth-container {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.auth-container h2 {
+  font-size: 32px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-container input {
+  padding: 16px;
+  border-radius: 4px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.auth-container button {
+  padding: 16px;
+  border: none;
+  border-radius: 4px;
+  background: rgb(146, 17, 155);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.auth-container button:hover {
+  background: rgb(168, 76, 161);
+}
+
+.help-section {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.help-section a {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.help-section a:hover {
+  text-decoration: underline;
+}
+
+.auth-container p {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-container a {
+  color: rgb(146, 17, 155);
+  text-decoration: none;
+}
+
+.intro-section {
+  padding: 50px 20px;
+}
+
+.intro-section h1 {
+  text-align: center;
+  padding: 50px 0;
+  font-size: 2.5rem;
+}
+
+.intro-description {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.intro-description-p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.shield {
+  width: 100%;
+  max-width: 300px;
+}
+
+.discord {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.discord button {
+  padding: 15px 40px;
+  background: rgb(114, 137, 218);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.discord button:hover {
+  background: rgb(88, 101, 242);
+}
+
+.awards-section,
+.tv-section {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.awards-section h1,
+.tv-section h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.awards-section > div,
+.tv-section > div {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.tv-section > div {
+  flex-direction: row-reverse;
+}
+
+.awards-section img,
+.tv-section img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 10px;
+}
+
+.awards-section p,
+.tv-section p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #ccc;
+}
+
+.slider-section {
+  margin: 50px 0;
+}
+
+.slider-navigation {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.slider-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 20px 0;
+  margin: 0 50px;
+}
+
+.slider-container::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-item {
+  flex: 0 0 auto;
+  margin: 0 10px;
+}
+
+.slider-item img {
+  width: 200px;
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.slider-item img:hover {
+  transform: scale(1.05);
+}
+
+.arrow {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow.left {
+  left: 10px;
+}
+
+.arrow.right {
+  right: 10px;
+}
+
+.anime-section {
+  margin: 50px 0;
+}
+
+.shenron-png {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shenron-png img {
+  max-width: 100%;
+  height: auto;
+}
+
+.review-section {
+  margin: 50px 0;
+}
+
+.rev-tag {
+  text-align: center;
+  padding: 50px 0;
+  margin-top: 50px;
+}
+
+.rev-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.review-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.user-pfp {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.review-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ccc;
+}
+
+.comment-l {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.comment-l p {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
   .intro-description {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .intro-description-p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #ccc;
-  }
-  
-  .shield {
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  .discord {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .discord button {
-    padding: 15px 40px;
-    background: rgb(114, 137, 218);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .discord button:hover {
-    background: rgb(88, 101, 242);
-  }
-  
-  .awards-section, .tv-section {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 0 20px;
-  }
-  
-  .awards-section h1, .tv-section h1 {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .awards-section > div, .tv-section > div {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-  }
-  
-  .tv-section > div {
-    flex-direction: row-reverse;
-  }
-  
-  .awards-section img, .tv-section img {
-    width: 100%;
-    max-width: 500px;
-    border-radius: 10px;
-  }
-  
-  .awards-section p, .tv-section p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #ccc;
-  }
-  
-  .slider-section {
-    margin: 50px 0;
-  }
-  
-  .slider-navigation {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .slider-container {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    padding: 20px 0;
-    margin: 0 50px;
-  }
-  
-  .slider-container::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .slider-item {
-    flex: 0 0 auto;
-    margin: 0 10px;
-  }
-  
-  .slider-item img {
-    width: 200px;
-    border-radius: 8px;
-    transition: transform 0.3s;
-  }
-  
-  .slider-item img:hover {
-    transform: scale(1.05);
-  }
-  
-  .arrow {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .arrow.left {
-    left: 10px;
-  }
-  
-  .arrow.right {
-    right: 10px;
-  }
-  
-  .anime-section {
-    margin: 50px 0;
-  }
-  
-  .shenron-png {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .shenron-png img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  .review-section {
-    margin: 50px 0;
-  }
-  
-  .rev-tag {
-    text-align: center;
-    padding: 50px 0;
-    margin-top: 50px;
-  }
-  
-  .rev-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-  
-  .review-card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .user-pfp {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .user-details {
-    display: flex;
     flex-direction: column;
   }
-  
-  .user-name {
-    font-weight: bold;
+
+  .awards-section > div,
+  .tv-section > div {
+    flex-direction: column;
   }
-  
-  .timestamp {
-    font-size: 12px;
-    color: #aaa;
-  }
-  
-  .review-text {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #ccc;
-  }
-  
-  .comment-l {
-    text-align: center;
-    margin: 30px 0;
-  }
-  
-  .comment-l p {
-    margin-bottom: 10px;
-  }
-  
-  @media (max-width: 768px) {
-    .intro-description {
-      flex-direction: column;
-    }
-    
-    .awards-section > div, .tv-section > div {
-      flex-direction: column;
-    }
-  }
-  
+}
