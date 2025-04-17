@@ -64,7 +64,7 @@ const MoviesPage = () => {
   };
 
   return (
-    <div className="movies-page">
+    <div className="movies-page min-h-screen bg-gradient-to-br from-black to-purple-900 text-white overflow-hidden">
       <Header
         searchQuery={searchQuery}
         onSearchChange={handleSearchInputChange}

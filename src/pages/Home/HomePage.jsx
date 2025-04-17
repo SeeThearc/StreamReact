@@ -142,7 +142,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="home-page">
+    <div className="home-page min-h-screen bg-gradient-to-br from-black to-purple-900 text-white overflow-hidden">
       <Header
         searchQuery={searchQuery}
         onSearchChange={handleSearchInputChange}

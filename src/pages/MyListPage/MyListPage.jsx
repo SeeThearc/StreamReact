@@ -54,7 +54,7 @@ const MyListPage = () => {
   };
 
   return (
-    <div className="mylist-page">
+    <div className="mylist-page min-h-screen bg-gradient-to-br from-black to-purple-900 text-white overflow-hidden">
       <Header
         searchQuery={searchQuery}
         onSearchChange={handleSearchInputChange}

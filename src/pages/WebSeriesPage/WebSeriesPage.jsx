@@ -64,7 +64,7 @@ const WebSeriesPage = () => {
   };
 
   return (
-    <div className="webseries-page">
+    <div className="webseries-page min-h-screen bg-gradient-to-br from-black to-purple-900 text-white overflow-hidden">
       <Header
         searchQuery={searchQuery}
         onSearchChange={handleSearchInputChange}
