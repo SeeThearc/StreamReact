@@ -497,8 +497,6 @@ export default function PlansPage() {
         )}
       </main>
       <Footer />
-
-      <Footer />
     </div>
   );
 }

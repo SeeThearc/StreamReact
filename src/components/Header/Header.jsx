@@ -140,7 +140,7 @@ const Header = ({
             onClick={() => setShowProfileMenu(!showProfileMenu)}
           >
             <img
-              src={userProfile?.photoURL || "/assets/images/profile.png"}
+              src="src\assets\images\pro.jpeg"
               alt="profile"
               height="40px"
               className="pro"
