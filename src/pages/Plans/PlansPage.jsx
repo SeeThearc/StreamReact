@@ -8,6 +8,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
+import Footer from "../../components/Footer/Footer";
 // Replace with your Stripe publishable key
 const stripePromise = loadStripe("pk_test_your_publishable_key");
 
@@ -39,20 +40,6 @@ const Navbar = () => (
       </a>
     </div>
   </nav>
-);
-
-// Footer component
-const Footer = ({ marginTop }) => (
-  <footer className="py-8 px-6 bg-black" style={{ marginTop }}>
-    <div className="max-w-6xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-center">
-        <Logo />
-        <p className="text-gray-500">
-          © 2025 Dimension Streaming. All rights reserved.
-        </p>
-      </div>
-    </div>
-  </footer>
 );
 
 // Enhanced PlanCard component
@@ -511,7 +498,7 @@ export default function PlansPage() {
       </main>
       <Footer />
 
-      <Footer marginTop={selectedPlan ? "60px" : "80px"} />
+      <Footer />
     </div>
   );
 }
