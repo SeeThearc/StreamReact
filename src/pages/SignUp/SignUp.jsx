@@ -25,13 +25,11 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-    // Basic validation
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords don't match!");
       return;
     }
     
-    // Navigate to success page
     navigate('/success');
   };
 

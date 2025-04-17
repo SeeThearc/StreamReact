@@ -10,7 +10,6 @@ import { useMedia } from '../../context/MediaContext';
 const MoviesPage = () => {
   const navigate = useNavigate();
   
-  // Get shared context
   const { 
     isLoading, setIsLoading, 
     trailerKey, isModalOpen,
@@ -19,7 +18,6 @@ const MoviesPage = () => {
     fetchMovies
   } = useMedia();
   
-  // State for storing movie data
   const [actionMovies, setActionMovies] = useState([]);
   const [comedyMovies, setComedyMovies] = useState([]);
   const [dramaMovies, setDramaMovies] = useState([]);
@@ -32,7 +30,6 @@ const MoviesPage = () => {
       try {
         setIsLoading(true);
         
-        // Fetch all movie categories
         const popular = await fetchMovies('/movie/popular?');
         const action = await fetchMovies('/discover/movie?with_genres=28');
         const comedy = await fetchMovies('/discover/movie?with_genres=35');
@@ -45,7 +42,6 @@ const MoviesPage = () => {
         setDramaMovies(drama);
         setHorrorMovies(horror);
         
-        // Set a featured movie for the banner
         if (popular.length > 0) {
           setFeaturedMovie(popular[0]);
         }

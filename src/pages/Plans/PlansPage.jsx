@@ -45,8 +45,7 @@ const PlansPage = () => {
 
   const handleSelectPlan = (plan) => {
     setSelectedPlan(plan);
-    // In a real app, you would save the selected plan
-    navigate('/home'); // Navigate to home page after plan selection
+    navigate('/home');
   };
 
   return (

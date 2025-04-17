@@ -1,9 +1,8 @@
 import React from 'react';
 import MovieSlider from '../MovieSlider/MovieSlider';
-import './Recommendations.css'; // Optional - only if you need specific styles
+import './Recommendations.css'; 
 
 const Recommendations = ({ recommendations, isLoading, onPlayMedia, onAddToMyList }) => {
-  // Handle loading state
   if (isLoading) {
     return (
       <div className="recommendations-section">
@@ -13,7 +12,6 @@ const Recommendations = ({ recommendations, isLoading, onPlayMedia, onAddToMyLis
     );
   }
 
-  // Handle empty state
   if (!recommendations || recommendations.length === 0) {
     return (
       <div className="recommendations-section">
@@ -24,15 +22,12 @@ const Recommendations = ({ recommendations, isLoading, onPlayMedia, onAddToMyLis
     );
   }
 
-  // Format recommendations to match the MovieSlider's expected movie format
   const formattedRecommendations = recommendations.map(item => ({
     ...item,
-    duration: item.year, // Use year as duration
+    duration: item.year,
     genres: `${item.mediaType === 'movie' ? 'Movie' : 'TV Show'} • ${item.reason.substring(0, 60)}${item.reason.length > 60 ? '...' : ''}`
-    // This combines the media type and reason in the genres field, with truncation
   }));
 
-  // Use the MovieSlider component with recommendations data
   return (
     <MovieSlider 
       title="Recommended For You" 

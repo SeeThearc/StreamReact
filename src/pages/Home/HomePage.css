@@ -65,19 +65,16 @@
   cursor: pointer;
 }
 
-/* Fixed banner styles */
 .banner {
   height: 80vh;
-  /* Remove the fixed background-image from CSS */
-  /* background-image: url('/assets/images/yjhd.jpg'); */
   background-size: cover;
   background-position: center top;
   display: flex;
   align-items: flex-end;
   padding: 0 50px;
   position: relative;
-  margin-top: 0; /* Ensure there's no extra margin */
-  width: 100%; /* Ensure full width */
+  margin-top: 0;
+  width: 100%;
 }
 
 .banner::before {
@@ -88,14 +85,14 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(to top, rgba(0,0,0,0.9), transparent 70%);
-  z-index: 1; /* Ensure gradient is above the background but below the content */
+  z-index: 1;
 }
 
 .banner-content {
   position: relative;
   padding-bottom: 50px;
   max-width: 600px;
-  z-index: 2; /* Ensure content is above the gradient */
+  z-index: 2;
 }
 
 .banner-content h2 {
@@ -145,12 +142,10 @@
   color: white;
 }
 
-/* Main content area needs proper spacing from fixed header */
 .main-content {
-  padding-top: 70px; /* Adjust based on your header height */
+  padding-top: 70px;
 }
 
-/* Featured content section should be full width */
 .featured-content {
   width: 100%;
 }

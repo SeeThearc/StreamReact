@@ -28,7 +28,7 @@ const MovieSlider = ({ title, movies, onPlayMovie }) => {
                 rating={movie.rating} 
                 duration={movie.duration} 
                 genres={movie.genres}
-                movie={movie} // Pass full movie object to enable My List functionality
+                movie={movie}
               />
             </div>
           ))}

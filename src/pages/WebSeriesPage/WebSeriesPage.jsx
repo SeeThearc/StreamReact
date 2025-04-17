@@ -10,7 +10,6 @@ import { useMedia } from '../../context/MediaContext';
 const WebSeriesPage = () => {
   const navigate = useNavigate();
   
-  // Get shared context
   const { 
     isLoading, setIsLoading, 
     trailerKey, isModalOpen,
@@ -19,7 +18,6 @@ const WebSeriesPage = () => {
     fetchTVShows
   } = useMedia();
   
-  // State for storing TV show data
   const [popularShows, setPopularShows] = useState([]);
   const [topRatedShows, setTopRatedShows] = useState([]);
   const [dramaShows, setDramaShows] = useState([]);
@@ -32,7 +30,6 @@ const WebSeriesPage = () => {
       try {
         setIsLoading(true);
         
-        // Fetch all TV show categories
         const popular = await fetchTVShows('/tv/popular?');
         const topRated = await fetchTVShows('/tv/top_rated?');
         const drama = await fetchTVShows('/discover/tv?with_genres=18');
@@ -44,8 +41,7 @@ const WebSeriesPage = () => {
         setDramaShows(drama);
         setCrimeShows(crime);
         setSciFiShows(sciFi);
-        
-        // Set a featured show for the banner
+
         if (popular.length > 0) {
           setFeaturedShow(popular[0]);
         }

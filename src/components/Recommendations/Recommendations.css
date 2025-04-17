@@ -1,4 +1,3 @@
-/* src/components/Recommendations/Recommendations.css */
 .recommendations-section {
     margin: 40px 0;
   }
@@ -20,11 +19,11 @@
     scroll-behavior: smooth;
     padding: 10px 0;
     gap: 20px;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
   
   .recommendations-slider::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge */
+    display: none; 
   }
   
   .recommendation-item {
@@ -42,7 +41,7 @@
     position: relative;
     width: 100%;
     height: 0;
-    padding-bottom: 150%; /* 2:3 aspect ratio for posters */
+    padding-bottom: 150%; 
     overflow: hidden;
     border-radius: 8px;
   }

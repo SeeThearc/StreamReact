@@ -11,9 +11,7 @@ import { useMedia } from '../../context/MediaContext';
 const HomePage = () => {
   const navigate = useNavigate();
 
-  // Get all needed values from MediaContext
   const {
-    // Media context values
     myList,
     addToMyList,
     recommendations,
@@ -43,7 +41,6 @@ const HomePage = () => {
   const [featuredMovie, setFeaturedMovie] = useState(null);
   const [didFetchRecommendations, setDidFetchRecommendations] = useState(false);
 
-  // Function to get genres that doesn't recreate on each render
   const getGenres = React.useCallback((genreIds) => {
     const genreMap = {
       28: 'Action', 12: 'Adventure', 16: 'Animation', 35: 'Comedy', 80: 'Crime',
@@ -59,7 +56,6 @@ const HomePage = () => {
       .join(' • ');
   }, []);
 
-  // Effect for fetching movie data - separated from recommendations fetch
   useEffect(() => {
     const fetchMovieData = async () => {
       try {
@@ -125,9 +121,7 @@ const HomePage = () => {
     fetchMovieData();
   }, [API_KEY, BASE_URL, IMAGE_BASE_URL, BACKDROP_BASE_URL, getGenres]);
 
-  // Separate effect for recommendations - runs only once on component mount
   useEffect(() => {
-    // Only fetch recommendations once to avoid infinite loop
     if (myList && myList.length > 0 && !didFetchRecommendations) {
       console.log("Fetching recommendations on HomePage mount");
       fetchRecommendations();
@@ -143,7 +137,6 @@ const HomePage = () => {
     }
   };
 
-  // Function to handle adding recommendations to list
   const handleAddToList = (item, event) => {
     addToMyList(item, event);
   };
@@ -194,7 +187,6 @@ const HomePage = () => {
           <MovieSlider title="Popular Shows" movies={popularShows} onPlayMovie={playMedia} />
           <MovieSlider title="Comedy Movies" movies={comedyMovies} onPlayMovie={playMedia} />
           
-          {/* Add recommendations section */}
           {myList && myList.length > 0 && (
             <div className="recommendations-section">
               <Recommendations

@@ -26,7 +26,6 @@ const MovieCard = ({ image, title, rating, duration, genres, movie }) => {
     >
       <img src={image} alt={title} width="200px" />
       
-      {/* My List button that appears on hover */}
       {isHovered && movie && (
         <button 
           className="mylist-button"

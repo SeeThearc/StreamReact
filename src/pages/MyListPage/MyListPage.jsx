@@ -11,7 +11,6 @@ const MyListPage = () => {
   const navigate = useNavigate();
   const searchResultsRef = useRef(null);
   
-  // Get all needed context values
   const {
     myList,
     removeFromMyList,
@@ -25,16 +24,12 @@ const MyListPage = () => {
     searchResults,
     showSearchResults,
     setShowSearchResults,
-    // Recommendation values from context
     recommendations,
     isLoadingRecommendations,
     fetchRecommendations
   } = useMedia();
 
-  // Trigger recommendations fetch when component mounts
   useEffect(() => {
-    // We only need this if we want to force a refresh when visiting the page
-    // It's also handled by the useEffect in MediaContext when myList changes
     if (myList.length > 0) {
       console.log("MyListPage mounted, fetching recommendations");
       fetchRecommendations();
@@ -48,9 +43,7 @@ const MyListPage = () => {
     }
   };
 
-  // Function to handle adding recommendations to list
   const handleAddToList = (item) => {
-    // Prepare item in the correct format for your list
     const formattedItem = {
       ...item,
       genres: item.genres || `${item.mediaType === 'movie' ? 'Movie' : 'TV Show'} (${item.year})`,
@@ -106,7 +99,6 @@ const MyListPage = () => {
           </div>
         )}
         
-        {/* Add the recommendations component */}
         {myList.length > 0 && (
           <Recommendations 
             recommendations={recommendations}

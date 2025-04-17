@@ -6,7 +6,6 @@ const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
 export const getRecommendations = async (myListItems) => {
   try {
-    // Format the list items for the prompt
     const formattedList = myListItems.map(item => 
       `${item.title} (${item.mediaType === 'movie' ? 'Movie' : 'TV Show'})`
     ).join('\n');
@@ -36,13 +35,10 @@ export const getRecommendations = async (myListItems) => {
     const response = await result.response;
     const text = response.text();
     
-    // Parse the JSON response
-    // Find JSON content between square brackets
     const jsonMatch = text.match(/\[[\s\S]*\]/);
     if (jsonMatch) {
       const recommendations = JSON.parse(jsonMatch[0]);
       
-      // Add placeholder images
       return recommendations.map(item => ({
         ...item,
         image: `https://via.placeholder.com/300x450?text=${encodeURIComponent(item.title)}`,

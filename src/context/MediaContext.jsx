@@ -216,7 +216,6 @@ export const MediaProvider = ({ children }) => {
     return () => clearTimeout(debounceTimer);
   }, [searchQuery]);
 
-  // Fetch data methods
   const fetchMovies = async (endpoint) => {
     try {
       const response = await fetch(`${BASE_URL}${endpoint}&api_key=${API_KEY}`);
@@ -239,7 +238,6 @@ export const MediaProvider = ({ children }) => {
     }
   };
 
-  // Modified function to fetch recommendations using Gemini API with real images
   const fetchRecommendations = async () => {
     if (myList.length === 0) {
       console.log("MyList is empty, skipping recommendations");
@@ -293,13 +291,10 @@ export const MediaProvider = ({ children }) => {
       
       console.log("Received response from Gemini");
       
-      // Parse the JSON response
       let recommendationData;
       try {
-        // First try direct JSON parsing
         recommendationData = JSON.parse(text);
       } catch (e) {
-        // If direct parsing fails, try to extract JSON from the response
         console.log("Direct parsing failed, trying to extract JSON");
         const jsonMatch = text.match(/\[[\s\S]*\]/);
         if (jsonMatch) {
@@ -318,12 +313,11 @@ export const MediaProvider = ({ children }) => {
       if (recommendationData && Array.isArray(recommendationData)) {
         console.log("Successfully parsed recommendations:", recommendationData.length);
         
-        // First create the basic recommendations with placeholder images
         const basicRecommendations = recommendationData.map(item => ({
           id: item.id || `rec-${Math.random().toString(36).substr(2, 9)}`,
           title: item.title,
           mediaType: item.mediaType,
-          image: `/assets/images/placeholder.jpg`, // Local placeholder image
+          image: `/assets/images/placeholder.jpg`, 
           backdropPath: null,
           rating: "U/A 13+",
           duration: item.year,
@@ -333,10 +327,8 @@ export const MediaProvider = ({ children }) => {
           overview: item.reason
         }));
         
-        // Set recommendations immediately with placeholders to show something
         setRecommendations(basicRecommendations);
         
-        // Then try to find real images for each recommendation
         try {
           const enhancedRecommendations = await Promise.all(
             basicRecommendations.map(async (rec) => {
@@ -348,7 +340,6 @@ export const MediaProvider = ({ children }) => {
                 );
                 const data = await response.json();
                 
-                // If we found a match, use its poster image
                 if (data.results && data.results.length > 0) {
                   const match = data.results[0];
                   return {
@@ -369,11 +360,9 @@ export const MediaProvider = ({ children }) => {
             })
           );
           
-          // Update recommendations with real images
           setRecommendations(enhancedRecommendations);
         } catch (error) {
           console.error("Error enhancing recommendations with images:", error);
-          // The basic recommendations are already set, so no need to set again
         }
       } else {
         console.error("Invalid recommendations data structure");
