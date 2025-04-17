@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.0",
+    "@stripe/react-stripe-js": "^3.6.0",
+    "@stripe/stripe-js": "^7.1.0",
     "@tailwindcss/vite": "^4.1.4",
     "firebase": "^11.6.0",
     "lucide-react": "^0.488.0",

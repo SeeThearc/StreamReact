@@ -7,6 +7,7 @@ import LogIn from "./pages/Login/Login";
 import PlansPage from "./pages/Plans/PlansPage";
 import SuccessPage from "./pages/Success/SuccessPage";
 import NotFound from "./pages/NotFound/NotFound";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import WebSeriesPage from "./pages/WebSeriesPage/WebSeriesPage";
 import MyListPage from "./pages/MyListPage/MyListPage";
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/success" element={<SuccessPage />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/myList" element={<MyListPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </Router>
     </MediaProvider>

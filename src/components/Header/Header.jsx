@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React, { useRef, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useMedia } from "../../context/MediaContext"; // Make sure to import the context
 
 const Header = ({
   searchQuery,
@@ -8,30 +9,58 @@ const Header = ({
   searchResults,
   showSearchResults,
   playShow,
-  searchPlaceholder = 'Search content...'
+  searchPlaceholder = "Search content...",
 }) => {
   const searchResultsRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const { currentUser, userProfile } = useMedia(); // Get user data from context
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
-        if (typeof showSearchResults === 'function') {
+      if (
+        searchResultsRef.current &&
+        !searchResultsRef.current.contains(event.target)
+      ) {
+        if (typeof showSearchResults === "function") {
           showSearchResults(false);
         }
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showSearchResults]);
 
   const redirectToSignOut = () => {
-    navigate('/');
+    navigate("/");
   };
 
-  const getActiveClass = (path) => (location.pathname === path ? 'head-opt active' : 'head-opt');
+  const redirectToProfile = () => {
+    navigate("/profile");
+  };
+
+  const getActiveClass = (path) =>
+    location.pathname === path ? "head-opt active" : "head-opt";
+
+  // Show user profile menu when avatar is clicked
+  const [showProfileMenu, setShowProfileMenu] = React.useState(false);
+
+  const profileMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)
+      ) {
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="header">
@@ -41,10 +70,18 @@ const Header = ({
           <p style={{ color: "#fff" }}>Sphere.</p>
         </div>
         <div className="head-options">
-          <Link to="/home" className={getActiveClass('/home')}>Home</Link>
-          <Link to="/movies" className={getActiveClass('/movies')}>Movies</Link>
-          <Link to="/webseries" className={getActiveClass('/webseries')}>Web Series</Link>
-          <Link to="/mylist" className={getActiveClass('/mylist')}>My List</Link>
+          <Link to="/home" className={getActiveClass("/home")}>
+            Home
+          </Link>
+          <Link to="/movies" className={getActiveClass("/movies")}>
+            Movies
+          </Link>
+          <Link to="/webseries" className={getActiveClass("/webseries")}>
+            Web Series
+          </Link>
+          <Link to="/mylist" className={getActiveClass("/mylist")}>
+            My List
+          </Link>
         </div>
       </div>
 
@@ -59,7 +96,10 @@ const Header = ({
               className="search-input"
             />
             <button type="submit" className="search-button">
-              <i className="fa-solid fa-magnifying-glass" style={{ color: "white" }}></i>
+              <i
+                className="fa-solid fa-magnifying-glass"
+                style={{ color: "white" }}
+              ></i>
             </button>
           </form>
 
@@ -78,7 +118,9 @@ const Header = ({
                   />
                   <div className="search-result-info">
                     <h4>{item.title}</h4>
-                    <p>{item.duration} • {item.genres}</p>
+                    <p>
+                      {item.duration} • {item.genres}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -86,14 +128,60 @@ const Header = ({
           )}
         </div>
 
-        <i className="fa-solid fa-bell head-logo" style={{ color: "white" }}></i>
-        <img src="/assets/images/profile.png" alt="profile" height="40px" className="pro" />
-        <i className="fa-solid fa-caret-down head-logo" style={{ color: "white" }}></i>
         <i
-          className="fa-solid fa-right-from-bracket"
-          style={{ color: "blueviolet", cursor: "pointer", marginRight: "10px" }}
-          onClick={redirectToSignOut}
+          className="fa-solid fa-bell head-logo"
+          style={{ color: "white" }}
         ></i>
+
+        {/* Profile section with dropdown menu */}
+        <div className="profile-dropdown" ref={profileMenuRef}>
+          <div
+            className="profile-avatar"
+            onClick={() => setShowProfileMenu(!showProfileMenu)}
+          >
+            <img
+              src={userProfile?.photoURL || "/assets/images/profile.png"}
+              alt="profile"
+              height="40px"
+              className="pro"
+            />
+            <i
+              className="fa-solid fa-caret-down head-logo"
+              style={{ color: "white" }}
+            ></i>
+          </div>
+
+          {showProfileMenu && (
+            <div className="profile-menu">
+              <div className="profile-menu-header">
+                <p className="username">{userProfile?.displayName || "User"}</p>
+                <p className="email">{currentUser?.email || ""}</p>
+              </div>
+
+              <div className="profile-menu-items">
+                <div className="profile-menu-item" onClick={redirectToProfile}>
+                  <i className="fa-solid fa-user"></i>
+                  <span>Profile</span>
+                </div>
+
+                <div
+                  className="profile-menu-item"
+                  onClick={() => navigate("/mylist")}
+                >
+                  <i className="fa-solid fa-bookmark"></i>
+                  <span>My List</span>
+                </div>
+
+                <div className="profile-menu-separator"></div>
+
+                <div className="profile-menu-item" onClick={redirectToSignOut}>
+                  <i className="fa-solid fa-right-from-bracket"></i>
+                  <span>Sign Out</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

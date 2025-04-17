@@ -123,10 +123,7 @@ export default function StreamingPlatform() {
           >
             Features
           </a>
-          <a
-            href="#pricing"
-            className="hover:text-purple-300 transition-colors"
-          >
+          <a href="/plans" className="hover:text-purple-300 transition-colors">
             Pricing
           </a>
           <a href="#about" className="hover:text-purple-300 transition-colors">
@@ -161,7 +158,7 @@ export default function StreamingPlatform() {
             Features
           </a>
           <a
-            href="#pricing"
+            href="/plans"
             className="hover:text-purple-300 transition-colors"
             onClick={toggleMenu}
           >
