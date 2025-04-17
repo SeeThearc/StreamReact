@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import TrailerModal from '../../components/TrailerModal/TrailerModal';
 import Header from '../../components/Header/Header';
+import Recommendations from '../../components/Recommendations/Recommendations';
 import { useMedia } from '../../context/MediaContext';
 import './MyListPage.css';
 
@@ -14,6 +15,7 @@ const MyListPage = () => {
   const {
     myList,
     removeFromMyList,
+    addToMyList,
     trailerKey,
     isModalOpen,
     closeModal,
@@ -22,8 +24,22 @@ const MyListPage = () => {
     handleSearchInputChange,
     searchResults,
     showSearchResults,
-    setShowSearchResults
+    setShowSearchResults,
+    // Recommendation values from context
+    recommendations,
+    isLoadingRecommendations,
+    fetchRecommendations
   } = useMedia();
+
+  // Trigger recommendations fetch when component mounts
+  useEffect(() => {
+    // We only need this if we want to force a refresh when visiting the page
+    // It's also handled by the useEffect in MediaContext when myList changes
+    if (myList.length > 0) {
+      console.log("MyListPage mounted, fetching recommendations");
+      fetchRecommendations();
+    }
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -32,8 +48,16 @@ const MyListPage = () => {
     }
   };
 
-  const redirectToSignOut = () => {
-    navigate('/');
+  // Function to handle adding recommendations to list
+  const handleAddToList = (item) => {
+    // Prepare item in the correct format for your list
+    const formattedItem = {
+      ...item,
+      genres: item.genres || `${item.mediaType === 'movie' ? 'Movie' : 'TV Show'} (${item.year})`,
+      duration: item.year
+    };
+    
+    addToMyList(formattedItem);
   };
 
   return (
@@ -43,7 +67,7 @@ const MyListPage = () => {
         onSearchChange={handleSearchInputChange}
         onSearchSubmit={handleSearch}
         searchResults={searchResults}
-        showSearchResults={setShowSearchResults}
+        showSearchResults={showSearchResults}
         playShow={playMedia}
         searchPlaceholder="Search content..."
       />
@@ -80,6 +104,16 @@ const MyListPage = () => {
               </div>
             ))}
           </div>
+        )}
+        
+        {/* Add the recommendations component */}
+        {myList.length > 0 && (
+          <Recommendations 
+            recommendations={recommendations}
+            isLoading={isLoadingRecommendations}
+            onPlayMedia={playMedia}
+            onAddToMyList={handleAddToList}
+          />
         )}
       </div>
 

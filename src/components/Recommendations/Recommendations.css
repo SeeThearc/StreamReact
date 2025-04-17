@@ -1,0 +1,150 @@
+/* src/components/Recommendations/Recommendations.css */
+.recommendations-section {
+    margin: 40px 0;
+  }
+  
+  .recommendations-section h2 {
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 1.8rem;
+  }
+  
+  .slider-container {
+    position: relative;
+    padding: 0 40px;
+  }
+  
+  .recommendations-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+    gap: 20px;
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .recommendations-slider::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+  
+  .recommendation-item {
+    flex: 0 0 auto;
+    width: 240px;
+    margin-right: 15px;
+    transition: transform 0.3s ease;
+  }
+  
+  .recommendation-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .recommendation-poster {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 150%; /* 2:3 aspect ratio for posters */
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  
+  .recommendation-poster img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  .recommendation-info {
+    padding: 10px 0;
+  }
+  
+  .recommendation-info h3 {
+    margin: 0 0 5px;
+    font-size: 16px;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .recommendation-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #aaa;
+  }
+  
+  .recommendation-reason {
+    margin-top: 5px !important;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-style: italic;
+  }
+  
+  .add-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .recommendation-poster:hover .add-btn {
+    opacity: 1;
+  }
+  
+  .slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .slider-nav.prev {
+    left: 0;
+  }
+  
+  .slider-nav.next {
+    right: 0;
+  }
+  
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: #e50914;
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
