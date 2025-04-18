@@ -1,0 +1,169 @@
+.search-result-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 40px; 
+  }
+  
+  .add-to-list-btn {
+    position: absolute;
+    right: 15px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: rgba(146, 17, 155, 0.3);
+    border: 1px solid white;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+  }
+  
+  .search-result-item:hover .add-to-list-btn {
+    opacity: 1;
+    background-color: rgba(146, 17, 155, 0.9); 
+  }
+  
+  .add-to-list-btn:hover {
+    background-color: rgb(146, 17, 155);
+    transform: scale(1.1);
+  }
+  
+  .add-to-list-btn i {
+    font-size: 12px;
+  }
+
+.search-container {
+    position: relative;
+    width: 280px;
+    margin-right: 20px;
+  }
+  
+  .search-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 8px 40px 8px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+  
+  .search-input:focus {
+    border-color: rgb(146, 17, 155);
+    box-shadow: 0 0 5px rgba(146, 17, 155, 0.5);
+  }
+  
+  .search-button {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 350px;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    margin-top: 5px;
+  }
+  
+  .search-result-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .search-result-item:hover {
+    background-color: rgba(146, 17, 155, 0.2);
+  }
+  
+  .search-result-image {
+    width: 50px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .search-result-info {
+    flex: 1;
+  }
+  
+  .search-result-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+  }
+  
+  .search-result-info p {
+    margin: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .add-to-list-btn {
+    position: absolute;
+    right: 15px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: rgba(146, 17, 155, 0.3);
+    border: 1px solid white;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    z-index: 5;
+  }
+  
+  .search-result-item:hover .add-to-list-btn {
+    opacity: 1;
+    background-color: rgba(146, 17, 155, 0.9);
+  }
+  
+  .add-to-list-btn:hover {
+    background-color: rgb(146, 17, 155);
+    transform: scale(1.1);
+  }
+  
+  .add-to-list-btn i {
+    font-size: 12px;
+  }
+  
+  .head-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
