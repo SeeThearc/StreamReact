@@ -21,11 +21,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import EthereumCheckoutForm from "./EthereumCheckoutForm";
 import Logo from "../../components/Logo/Logo";
 
-const CONTRACT_ADDRESS =
-  import.meta.env.VITE_CONTRACT_ADDRESS ||
-  (import.meta.env.MODE === "development"
-    ? "0xYourTestContractAddress"
-    : undefined);
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
 const PlanCard = ({
   title,
   price,
