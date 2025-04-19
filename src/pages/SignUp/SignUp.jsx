@@ -65,7 +65,12 @@ export default function SignUp() {
         await setDoc(doc(db, "Users", user.uid), {
           email: user.email,
           userName: username,
+          status: false,
+          createdAt: new Date().toISOString(),
         });
+
+        // After successful registration, redirect to plans
+        window.location.href = "/plans?from=signup";
       }
       console.log("User registered successfully!");
       toast.success("User Registered Successfully!", {

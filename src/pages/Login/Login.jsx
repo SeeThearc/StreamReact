@@ -6,8 +6,10 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import { toast } from "react-toastify";
+import { getDoc, setDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 // Logo component that matches our existing branding
 const Logo = () => (
@@ -17,10 +19,11 @@ const Logo = () => (
 );
 
 // Button component matching our design system
-const Button = ({ type, className, children }) => (
+const Button = ({ type, className, children, onClick }) => (
   <button
     type={type}
     className={`px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg text-lg font-bold hover:from-purple-700 hover:to-blue-700 transition-all ${className}`}
+    onClick={onClick}
   >
     {children}
   </button>
@@ -44,6 +47,7 @@ const Navbar = () => (
 );
 
 export default function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -65,41 +69,82 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password } = formData; // ✅ Destructure here
+    const { email, password } = formData;
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      window.location.href = "/home";
-      toast.success("User Logged In Successfully!", {
-        position: "top-center",
-      });
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+
+      // Check user status in Firestore
+      const userDoc = await getDoc(doc(db, "Users", user.uid));
+      if (!userDoc.exists()) {
+        // User doesn't exist in Firestore at all
+        await auth.signOut();
+        toast.error("Account not found. Please sign up first.");
+        navigate("/signup");
+        return;
+      } else if (userDoc.exists() && userDoc.data().status === false) {
+        // User exists but hasn't selected a plan
+        await auth.signOut();
+        toast.error("Please complete plan selection to activate your account");
+        navigate("/plans?from=signup");
+        return;
+      }
+
+      // If we get here, login was successful
+      toast.success("Login successful!");
+      navigate("/home");
     } catch (error) {
       console.log(error.message);
-      toast.error(error.message, {
-        position: "bottom-center",
-      });
+      toast.error(error.message);
     }
   };
 
-  const googleLogin = () => {
+  // Similarly for the Google login
+  const googleLogin = async () => {
     const provider = new GoogleAuthProvider();
 
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        console.log("Google login result:", result);
-        if (result.user) {
-          toast.success("User logged in successfully!", {
-            position: "top-center",
-          });
-          window.location.href = "/home";
-        }
-      })
-      .catch((error) => {
-        console.error("Google Sign-In Error:", error);
-        toast.error(error.message || "Google login failed.", {
-          position: "bottom-center",
-        });
-      });
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Check if user exists in Firestore
+      const userDoc = await getDoc(doc(db, "Users", user.uid));
+
+      if (!userDoc.exists()) {
+        // User doesn't exist in Firestore at all
+        await auth.signOut();
+        toast.error("Account not found. Please sign up first.");
+        navigate("/signup");
+        return;
+      } else if (userDoc.exists() && userDoc.data().status === false) {
+        // User exists but hasn't selected a plan
+        await auth.signOut();
+        toast.error("Please complete plan selection to activate your account");
+        navigate("/plans?from=signup");
+        return;
+      }
+
+      // Existing user - check status
+      if (!userDoc.data().status) {
+        // If status is false, sign out and redirect to plans
+        await auth.signOut();
+        toast.error("Please complete plan selection to activate your account");
+        navigate("/plans?from=signup"); // Use navigate instead
+        return;
+      }
+
+      // Status is true - proceed with login
+      toast.success("User logged in successfully!");
+      navigate("/home"); // Use navigate instead
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      toast.error(error.message || "Google login failed.");
+    }
   };
 
   return (
@@ -271,15 +316,15 @@ export default function Login() {
             <div>
               <h3 className="font-bold text-sm mb-1">Secure Login</h3>
               <p className="text-xs text-gray-300">
-                Your connection to StreamSphere is encrypted and secure.
-                We never share your personal information.
+                Your connection to StreamSphere is encrypted and secure. We
+                never share your personal information.
               </p>
             </div>
           </div>
         </div>
       </main>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 }
