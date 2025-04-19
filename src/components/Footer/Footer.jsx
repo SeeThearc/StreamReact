@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
+import Logo from '../Logo/Logo';
 
 const Footer = ({ marginTop }) => {
   return (
@@ -144,9 +145,7 @@ const Footer = ({ marginTop }) => {
           </div>
 
           <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 mb-4 md:mb-0">
-              StreamSphere
-            </div>
+            <Logo />
             <p className="text-gray-500">
               © 2025 StreamSphere Streaming. All rights reserved.
             </p>

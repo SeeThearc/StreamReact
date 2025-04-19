@@ -5,11 +5,7 @@ import { auth, db } from "../firebase/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import Footer from "../../components/Footer/Footer";
-const Logo = () => (
-  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    StreamSphere
-  </div>
-);
+import Logo from "../../components/Logo/Logo";
 const Button = ({ type, className, children }) => (
   <button
     type={type}

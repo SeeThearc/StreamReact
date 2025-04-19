@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, Lock, Eye, EyeOff } from "lucide-react";
 import Footer from "../../components/Footer/Footer";
+import Logo from "../../components/Logo/Logo";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -10,11 +11,6 @@ import { auth, db } from "../firebase/firebase";
 import { toast } from "react-toastify";
 import { getDoc, setDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-const Logo = () => (
-  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    StreamSphere
-  </div>
-);
 const Button = ({ type, className, children, onClick }) => (
   <button
     type={type}

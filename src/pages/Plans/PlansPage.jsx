@@ -19,6 +19,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import EthereumCheckoutForm from "./EthereumCheckoutForm";
+import Logo from "../../components/Logo/Logo";
 
 const CONTRACT_ADDRESS =
   import.meta.env.VITE_CONTRACT_ADDRESS ||
