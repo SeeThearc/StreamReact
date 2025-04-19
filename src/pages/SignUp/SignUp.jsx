@@ -5,13 +5,11 @@ import { auth, db } from "../firebase/firebase";
 import { setDoc, doc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import Footer from "../../components/Footer/Footer";
-
 const Logo = () => (
   <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
     StreamSphere
   </div>
 );
-
 const Button = ({ type, className, children }) => (
   <button
     type={type}
@@ -20,7 +18,6 @@ const Button = ({ type, className, children }) => (
     {children}
   </button>
 );
-
 const Navbar = () => (
   <nav className="px-6 py-4 flex justify-between items-center">
     <div className="flex items-center">
@@ -36,7 +33,6 @@ const Navbar = () => (
     </div>
   </nav>
 );
-
 export default function SignUp() {
   const [formData, setFormData] = useState({
     username: "",
@@ -44,19 +40,15 @@ export default function SignUp() {
     password: "",
     confirmPassword: "",
   });
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { username, email, password } = formData;
-
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
@@ -81,22 +73,18 @@ export default function SignUp() {
       });
     }
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-purple-900 text-white">
       <Navbar />
-
       <main className="py-12">
         <div className="max-w-md mx-auto px-6">
           <div className="flex justify-center mb-8">
             <Logo />
           </div>
-
           <div className="bg-black bg-opacity-50 p-8 rounded-2xl backdrop-blur-sm border border-purple-900 w-[25vw]">
             <h2 className="text-2xl font-bold mb-6 text-center">
               Create Your Account
             </h2>
-
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
@@ -110,7 +98,6 @@ export default function SignUp() {
                     className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-purple-500 focus:outline-none transition-colors"
                   />
                 </div>
-
                 <div>
                   <input
                     type="email"
@@ -122,7 +109,6 @@ export default function SignUp() {
                     className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-purple-500 focus:outline-none transition-colors"
                   />
                 </div>
-
                 <div>
                   <input
                     type="password"
@@ -134,7 +120,6 @@ export default function SignUp() {
                     className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:border-purple-500 focus:outline-none transition-colors"
                   />
                 </div>
-
                 <div>
                   <input
                     type="password"
@@ -147,13 +132,11 @@ export default function SignUp() {
                   />
                 </div>
               </div>
-
               <div className="mt-8">
                 <Button type="submit" className="w-full">
                   Sign Up
                 </Button>
               </div>
-
               <div className="mt-6 text-center text-gray-400">
                 Already have an account?{" "}
                 <a
@@ -165,7 +148,6 @@ export default function SignUp() {
               </div>
             </form>
           </div>
-
           <div className="mt-8">
             <div className="p-4 bg-blue-900 bg-opacity-30 rounded-lg">
               <h3 className="font-bold mb-2">3D Streaming Benefits:</h3>
@@ -179,7 +161,6 @@ export default function SignUp() {
           </div>
         </div>
       </main>
-
       <Footer />
     </div>
   );
