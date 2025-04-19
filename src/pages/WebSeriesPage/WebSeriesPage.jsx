@@ -91,7 +91,7 @@ const WebSeriesPage = () => {
               }}
             >
               <div className="banner-content">
-                <h2>Featured Series</h2>
+                <h2 style={{color:"white",backgroundColor:"rgb(146, 17, 155",padding:"3px 5px",width:"192px",borderRadius:"7px",fontWeight:"bold"}}>Featured Series</h2>
                 <h1>{featuredShow.title}</h1>
                 <p>{featuredShow.genres}</p>
                 <p>{featuredShow.overview}</p>

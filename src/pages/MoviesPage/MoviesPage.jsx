@@ -91,7 +91,7 @@ const MoviesPage = () => {
               }}
             >
               <div className="banner-content">
-                <h2>Featured Movie</h2>
+                <h2 style={{color:"white",backgroundColor:"rgb(146, 17, 155",padding:"3px 5px",width:"188px",borderRadius:"7px",fontWeight:"bold"}}>Featured Movie</h2>
                 <h1>{featuredMovie.title}</h1>
                 <p>{featuredMovie.genres}</p>
                 <p>{featuredMovie.overview}</p>
