@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useMedia } from "../../context/MediaContext";
-import "./header.css"
+import "./header.css";
 
 const Header = ({
   searchQuery,
@@ -24,7 +24,6 @@ const Header = ({
         searchContainerRef.current &&
         !searchContainerRef.current.contains(event.target)
       ) {
-
         if (typeof showSearchResults === "function") {
           showSearchResults(false);
         }
@@ -70,13 +69,15 @@ const Header = ({
 
   const handleAddToList = (item, e) => {
     e.stopPropagation();
-    
+
     const formattedItem = {
       ...item,
-      genres: item.genres || `${item.mediaType === 'movie' ? 'Movie' : 'TV Show'} (${item.year})`,
-      duration: item.duration || item.year
+      genres:
+        item.genres ||
+        `${item.mediaType === "movie" ? "Movie" : "TV Show"} (${item.year})`,
+      duration: item.duration || item.year,
     };
-    
+
     addToMyList(formattedItem);
   };
 
@@ -140,7 +141,7 @@ const Header = ({
                       {item.duration} • {item.genres}
                     </p>
                   </div>
-                  <button 
+                  <button
                     className="add-to-list-btn"
                     onClick={(e) => handleAddToList(item, e)}
                     title="Add to My List"
@@ -165,9 +166,9 @@ const Header = ({
             onClick={() => setShowProfileMenu(!showProfileMenu)}
           >
             <img
-              src="src\assets\images\pro.jpeg"
+              src="https://i.redd.it/2yncnjghlme81.jpg"
               alt="profile"
-              height="40px"
+              height="60px"
               className="pro"
             />
             <i
