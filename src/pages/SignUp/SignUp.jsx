@@ -168,9 +168,10 @@ export default function SignUp() {
 
           <div className="mt-8">
             <div className="p-4 bg-blue-900 bg-opacity-30 rounded-lg">
-              <h3 className="font-bold mb-2">3D Streaming Benefits:</h3>
+              <h3 className="font-bold mb-2">Streaming Benefits:</h3>
               <ul className="list-disc pl-5 space-y-1 text-gray-300">
-                <li>Access to exclusive 3D content</li>
+                <li>Access to exclusive content</li>
+                <li>AI generated Recommendations</li>
                 <li>Stream on any device</li>
                 <li>Ad-free experience</li>
                 <li>First 7 days free</li>

@@ -92,7 +92,6 @@ export default function Login() {
     }
   };
 
-
   const googleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
@@ -116,7 +115,7 @@ export default function Login() {
       if (!userDoc.data().status) {
         await auth.signOut();
         toast.error("Please complete plan selection to activate your account");
-        navigate("/plans?from=signup"); 
+        navigate("/plans?from=signup");
         return;
       }
 
@@ -231,14 +230,14 @@ export default function Login() {
                 <div className="flex-grow border-t border-gray-700"></div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="flex justify-center items-center">
                 <button
                   type="button"
                   className="flex items-center justify-center p-3 bg-gray-900 border border-gray-700 rounded-lg hover:bg-gray-800 transition-colors"
                   onClick={googleLogin}
                 >
                   <svg
-                    className="w-5 h-5 mr-2"
+                    className="w-full h-5 mr-2"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -261,20 +260,6 @@ export default function Login() {
                     />
                   </svg>
                   Google
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center justify-center p-3 bg-gray-900 border border-gray-700 rounded-lg hover:bg-gray-800 transition-colors"
-                >
-                  <svg
-                    className="w-5 h-5 mr-2"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0014.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z" />
-                  </svg>
-                  Facebook
                 </button>
               </div>
 
