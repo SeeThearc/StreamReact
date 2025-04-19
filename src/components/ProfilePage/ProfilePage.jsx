@@ -17,7 +17,6 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
 
-  // Form state
   const [formData, setFormData] = useState({
     displayName: "",
     username: "",
@@ -31,10 +30,8 @@ const ProfilePage = () => {
   const [viewingHistory, setViewingHistory] = useState([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
 
-  // Initialize form data from user profile
   useEffect(() => {
     if (!currentUser) {
-      // Redirect to login if not authenticated
       navigate("/");
       return;
     }
@@ -47,7 +44,6 @@ const ProfilePage = () => {
         maturityRating: userProfile.preferences?.maturityRating || "U/A 13+",
       });
 
-      // Load viewing history
       loadViewingHistory();
     }
   }, [currentUser, userProfile]);
@@ -68,7 +64,6 @@ const ProfilePage = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Check username availability
     if (name === "username" && value !== userProfile?.username) {
       checkUsername(value);
     }
@@ -112,7 +107,7 @@ const ProfilePage = () => {
   };
 
   if (!currentUser) {
-    return null; // Will redirect in useEffect
+    return null;
   }
 
   return (
@@ -130,7 +125,7 @@ const ProfilePage = () => {
               <div className="profile-header">
                 <div className="profile-image">
                   <img
-                    src="src\assets\images\pro.jpeg"
+                    src="https://i.redd.it/2yncnjghlme81.jpg"
                     alt="Profile"
                   />
                 </div>
