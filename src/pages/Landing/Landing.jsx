@@ -1,103 +1,64 @@
 import { useState, useEffect } from "react";
-import { Play, ChevronLeft, ChevronRight, User, Menu, X } from "lucide-react";
+import { Play, ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
 import Footer from "../../components/Footer/Footer";
+import { useMedia } from "../../context/MediaContext"; // Import the context hook
 
-export default function StreamingPlatform() {
+export default function Landing() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Top 10 movies with placeholder data
-  const topMovies = [
-    {
-      id: 1,
-      title: "Cosmic Odyssey",
-      rating: 9.5,
-      genre: "Sci-Fi",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 2,
-      title: "Eternal Shadows",
-      rating: 9.3,
-      genre: "Drama",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 3,
-      title: "Digital Frontiers",
-      rating: 9.2,
-      genre: "Action",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 4,
-      title: "Quantum Dreams",
-      rating: 9.0,
-      genre: "Thriller",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 5,
-      title: "Neon Dynasty",
-      rating: 8.9,
-      genre: "Cyberpunk",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 6,
-      title: "Azure Horizons",
-      rating: 8.8,
-      genre: "Adventure",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 7,
-      title: "Virtual Realms",
-      rating: 8.7,
-      genre: "Fantasy",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 8,
-      title: "Crystal Visions",
-      rating: 8.6,
-      genre: "Mystery",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 9,
-      title: "Parallel Lives",
-      rating: 8.5,
-      genre: "Romance",
-      image: "/api/placeholder/800/450",
-    },
-    {
-      id: 10,
-      title: "Nebula Rising",
-      rating: 8.4,
-      genre: "Space Opera",
-      image: "/api/placeholder/800/450",
-    },
-  ];
+  // Use the Media context
+  const { fetchMovies, setIsLoading, API_KEY, BASE_URL, playMedia } =
+    useMedia();
+
+  // Fetch top rated movies from API
+  useEffect(() => {
+    const getTopRatedMovies = async () => {
+      try {
+        setLoading(true);
+        const topRatedMovies = await fetchMovies(
+          "/movie/popular?language=en-US&page=1"
+        );
+        setMovies(topRatedMovies.slice(0, 10));
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching top rated movies:", err);
+        setError("Failed to load top rated movies");
+        setLoading(false);
+      }
+    };
+
+    getTopRatedMovies();
+  }, [fetchMovies]);
 
   // Auto-scroll functionality
   useEffect(() => {
+    if (movies.length === 0) return;
+
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === topMovies.length - 1 ? 0 : prev + 1));
+      setCurrentSlide((prev) => (prev === movies.length - 1 ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(interval);
-  }, [topMovies.length]);
+  }, [movies.length]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === topMovies.length - 1 ? 0 : prev + 1));
+    setCurrentSlide((prev) => (prev === movies.length - 1 ? 0 : prev + 1));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? topMovies.length - 1 : prev - 1));
+    setCurrentSlide((prev) => (prev === 0 ? movies.length - 1 : prev - 1));
   };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Function to handle movie play
+  const handlePlayMovie = (movie) => {
+    playMedia(movie);
   };
 
   return (
@@ -186,22 +147,30 @@ export default function StreamingPlatform() {
         </div>
       )}
 
-      {/* Hero Section */}
+      {/* Hero Section with Autoplay Video */}
       <div className="relative h-screen flex items-center justify-center px-6">
-        {/* 3D-like background effect */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-full h-full max-w-6xl relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl transform rotate-6 scale-105 blur-xl"></div>
-            <div className="absolute inset-0 bg-gradient-to-l from-blue-500/20 to-purple-500/20 rounded-3xl transform -rotate-3 scale-110 blur-xl"></div>
-          </div>
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 bg-black bg-opacity-70 z-10"></div>
+          <video
+            className="absolute w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            <source src="/videos/hero-background.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
 
         <div className="relative z-10 text-center max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-          Your Universe of Entertainment
+            Your Universe of Entertainment
           </h1>
           <p className="text-xl md:text-2xl mb-12 text-gray-300">
-          From thrilling originals to blockbuster hits — stream it all in one place.
+            From thrilling originals to blockbuster hits — stream it all in one
+            place.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a
@@ -223,79 +192,100 @@ export default function StreamingPlatform() {
       {/* Movie Slider Section */}
       <div className="py-16 px-4 relative overflow-hidden">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-          Top 10 Trending Movies
+          Top 10 Rated Movies
         </h2>
 
-        {/* Movie Slider */}
-        <div className="relative max-w-6xl mx-auto">
-          <div className="overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
-              {topMovies.map((movie) => (
-                <div key={movie.id} className="min-w-full">
-                  <div className="relative mx-4 rounded-xl overflow-hidden group transform transition-all duration-300 hover:scale-105 cursor-pointer">
-                    <img
-                      src={movie.image}
-                      alt={movie.title}
-                      className="w-full h-64 md:h-96 object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500"></div>
+          </div>
+        )}
 
-                    <div className="absolute bottom-0 left-0 p-6 w-full">
-                      <div className="flex justify-between items-end">
-                        <div>
-                          <h3 className="text-2xl md:text-3xl font-bold mb-2">
-                            {movie.title}
-                          </h3>
-                          <p className="text-sm text-gray-300">{movie.genre}</p>
-                        </div>
-                        <div className="bg-purple-600 px-3 py-1 rounded-lg font-bold">
-                          {movie.rating}
+        {/* Error State */}
+        {error && !loading && (
+          <div className="text-center text-red-400 mb-4">
+            <p>Error loading movies: {error}</p>
+          </div>
+        )}
+
+        {/* Movie Slider */}
+        {!loading && movies.length > 0 && (
+          <div className="relative max-w-6xl mx-auto">
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {movies.map((movie) => (
+                  <div key={movie.id} className="min-w-full">
+                    <div
+                      className="relative mx-4 rounded-xl overflow-hidden group transform transition-all duration-300 hover:scale-105 cursor-pointer"
+                      onClick={() => handlePlayMovie(movie)}
+                    >
+                      <img
+                        src={movie.image}
+                        alt={movie.title}
+                        className="w-full h-64 md:h-96 object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+
+                      <div className="absolute bottom-0 left-0 p-6 w-full">
+                        <div className="flex justify-between items-end">
+                          <div>
+                            <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                              {movie.title}
+                            </h3>
+                            <p className="text-sm text-gray-300">
+                              {movie.genres}
+                            </p>
+                          </div>
+                          <div className="bg-purple-600 px-3 py-1 rounded-lg font-bold">
+                            {movie.rating}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* Play button overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="bg-purple-600 rounded-full p-4 transform transition-transform group-hover:scale-110">
-                        <Play size={32} />
+                      {/* Play button overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="bg-purple-600 rounded-full p-4 transform transition-transform group-hover:scale-110">
+                          <Play size={32} />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation buttons */}
+            <button
+              onClick={prevSlide}
+              className="absolute top-1/2 left-2 -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-70 transition-all z-10"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute top-1/2 right-2 -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-70 transition-all z-10"
+            >
+              <ChevronRight size={24} />
+            </button>
+
+            {/* Indicators */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {movies.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    idx === currentSlide ? "bg-purple-500 w-6" : "bg-gray-600"
+                  }`}
+                />
               ))}
             </div>
           </div>
-
-          {/* Navigation buttons */}
-          <button
-            onClick={prevSlide}
-            className="absolute top-1/2 left-2 -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-70 transition-all z-10"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute top-1/2 right-2 -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-70 transition-all z-10"
-          >
-            <ChevronRight size={24} />
-          </button>
-
-          {/* Indicators */}
-          <div className="flex justify-center mt-6 space-x-2">
-            {topMovies.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  idx === currentSlide ? "bg-purple-500 w-6" : "bg-gray-600"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Features Section */}
@@ -323,9 +313,12 @@ export default function StreamingPlatform() {
                   ></path>
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-3">AI-Powered Personalized Streaming</h3>
+              <h3 className="text-xl font-bold mb-3">
+                AI-Powered Personalized Streaming
+              </h3>
               <p className="text-gray-400">
-              StreamSphere learns what you love and curates content that matches your vibe — no more endless scrolling.
+                StreamSphere learns what you love and curates content that
+                matches your vibe — no more endless scrolling.
               </p>
             </div>
 
