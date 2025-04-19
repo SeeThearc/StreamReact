@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Play, ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
 import Footer from "../../components/Footer/Footer";
-import { useMedia } from "../../context/MediaContext"; // Import the context hook
+import { useMedia } from "../../context/MediaContext";
+import Logo from "../../components/Logo/Logo";
 
 export default function Landing() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -65,11 +66,7 @@ export default function Landing() {
     <div className="min-h-screen bg-gradient-to-br from-black to-purple-900 text-white overflow-hidden">
       {/* Navigation */}
       <nav className="relative z-50 px-6 py-4 flex justify-between items-center">
-        <div className="flex items-center">
-          <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-            StreamSphere
-          </div>
-        </div>
+        <Logo />
 
         {/* Mobile menu button */}
         <button className="md:hidden" onClick={toggleMenu}>
