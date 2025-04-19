@@ -191,7 +191,17 @@ const HomePage = () => {
               }}
             >
               <div className="banner-content">
-                <h2 className="feahead" style={{color:"white",backgroundColor:"rgb(146, 17, 155",padding:"3px 5px",width:"183px",borderRadius:"7px",fontWeight:"bold"}}>
+                <h2
+                  className="feahead"
+                  style={{
+                    color: "white",
+                    backgroundColor: "rgb(146, 17, 155",
+                    padding: "3px 5px",
+                    width: "183px",
+                    borderRadius: "7px",
+                    fontWeight: "bold",
+                  }}
+                >
                   {featuredMovie.mediaType === "movie"
                     ? "Featured Movie"
                     : "Featured Show"}
