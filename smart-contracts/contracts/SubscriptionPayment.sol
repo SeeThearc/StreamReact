@@ -22,8 +22,7 @@ contract SubscriptionPayment {
         require(_serviceWallet != address(0), "SubscriptionPayment: Invalid service wallet address");
         owner = msg.sender;
         serviceWallet = _serviceWallet;
-        
-        // Add all plans including Free plan to match frontend expectations
+
         _addPlan("Free", 0 ether);
         _addPlan("Basic", 0.003 ether);
         _addPlan("Standard", 0.0047 ether);
@@ -75,7 +74,6 @@ contract SubscriptionPayment {
         require(bytes(plans[planId].name).length > 0, "SubscriptionPayment: Invalid plan");
         require(plans[planId].active, "SubscriptionPayment: Plan is not active");
         
-        // For Free plan, no payment is required
         if (keccak256(abi.encodePacked(_planName)) == keccak256(abi.encodePacked("Free"))) {
             emit PaymentReceived(msg.sender, 0, _planName);
             return;

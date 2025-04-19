@@ -12,15 +12,11 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-// Create the context
 export const MediaContext = createContext();
 
-// Create a custom hook to easily use the context
 export const useMedia = () => useContext(MediaContext);
 
 export const MediaProvider = ({ children }) => {
-  // Shared state
   const [trailerKey, setTrailerKey] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,31 +25,26 @@ export const MediaProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [myList, setMyList] = useState([]);
 
-  // New state for recommendations
   const [recommendations, setRecommendations] = useState([]);
   const [isLoadingRecommendations, setIsLoadingRecommendations] =
     useState(false);
 
-  // User profile state
   const [currentUser, setCurrentUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [isLoadingProfile, setIsLoadingProfile] = useState(false);
 
-  // Firebase references
   const db = getFirestore();
   const auth = getAuth();
 
-  // API configuration
   const API_KEY = import.meta.env.VITE_API_KEY;
   const BASE_URL = "https://api.themoviedb.org/3";
   const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
   const BACKDROP_BASE_URL = "https://image.tmdb.org/t/p/original";
 
   // Gemini API configuration
-  const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY; // Add this to your .env file
+  const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
-  // Monitor auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -62,7 +53,6 @@ export const MediaProvider = ({ children }) => {
         fetchUserList(user.uid);
       } else {
         setUserProfile(null);
-        // Load from localStorage when not logged in
         const savedList = localStorage.getItem("myList");
         if (savedList) {
           setMyList(JSON.parse(savedList));
@@ -137,23 +127,20 @@ export const MediaProvider = ({ children }) => {
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
-        return true; // Username is available
+        return true;
       }
-
-      // If the only document is the current user's, it's still available
       if (querySnapshot.size === 1 && currentUser) {
         const doc = querySnapshot.docs[0];
         return doc.id === currentUser.uid;
       }
 
-      return false; // Username is taken
+      return false; 
     } catch (error) {
       console.error("Error checking username:", error);
       return false;
     }
   };
 
-  // Fetch user's saved list from Firestore
   const fetchUserList = async (userId) => {
     try {
       const userListRef = doc(db, "userLists", userId);
@@ -162,7 +149,6 @@ export const MediaProvider = ({ children }) => {
       if (userListDoc.exists() && userListDoc.data().items) {
         setMyList(userListDoc.data().items);
       } else {
-        // Try to load from localStorage if available and sync to Firestore
         const savedList = localStorage.getItem("myList");
         if (savedList) {
           const parsedList = JSON.parse(savedList);
@@ -177,7 +163,6 @@ export const MediaProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Error fetching user list:", error);
-      // Fallback to localStorage
       const savedList = localStorage.getItem("myList");
       if (savedList) {
         setMyList(JSON.parse(savedList));
@@ -200,7 +185,6 @@ export const MediaProvider = ({ children }) => {
     }
   };
 
-  // Genre maps
   const movieGenreMap = {
     28: "Action",
     12: "Adventure",
@@ -242,7 +226,6 @@ export const MediaProvider = ({ children }) => {
     37: "Western",
   };
 
-  // Helper functions
   const getGenres = (genreIds, mediaType) => {
     const genreMap = mediaType === "tv" ? tvGenreMap : movieGenreMap;
     return genreIds
@@ -290,7 +273,6 @@ export const MediaProvider = ({ children }) => {
         setShowSearchResults(false);
         setSearchQuery("");
 
-        // Track viewing history in Firestore if user is logged in
         if (currentUser) {
           try {
             const historyRef = doc(db, "viewingHistory", currentUser.uid);
@@ -306,7 +288,6 @@ export const MediaProvider = ({ children }) => {
 
             if (historyDoc.exists()) {
               const history = historyDoc.data().items || [];
-              // Add to beginning and limit to 50 items
               const updatedHistory = [newHistoryItem, ...history].slice(0, 50);
               await updateDoc(historyRef, { items: updatedHistory });
             } else {
@@ -335,7 +316,6 @@ export const MediaProvider = ({ children }) => {
     setSearchQuery(e.target.value);
   };
 
-  // Check if item is in my list
   const isInMyList = (item) => {
     return myList.some(
       (listItem) =>
@@ -345,29 +325,23 @@ export const MediaProvider = ({ children }) => {
 
   // Add item to my list
   const addToMyList = (item, event) => {
-    // Prevent triggering the parent click events (like play movie)
     if (event) {
       event.stopPropagation();
     }
 
-    // Check if already in list
     if (!isInMyList(item)) {
       const updatedList = [...myList, item];
       setMyList(updatedList);
 
-      // Save to localStorage for non-logged in users
       localStorage.setItem("myList", JSON.stringify(updatedList));
 
-      // Save to Firestore if logged in
       if (currentUser) {
         saveUserListToFirestore(updatedList);
       }
     }
   };
 
-  // Remove item from my list
   const removeFromMyList = (item, event) => {
-    // Prevent triggering the parent click events
     if (event) {
       event.stopPropagation();
     }
@@ -378,16 +352,13 @@ export const MediaProvider = ({ children }) => {
     );
     setMyList(updatedList);
 
-    // Update localStorage
     localStorage.setItem("myList", JSON.stringify(updatedList));
 
-    // Update Firestore if logged in
     if (currentUser) {
       saveUserListToFirestore(updatedList);
     }
   };
 
-  // Get viewing history
   const fetchViewingHistory = async () => {
     if (!currentUser) return [];
 
@@ -405,7 +376,6 @@ export const MediaProvider = ({ children }) => {
     }
   };
 
-  // Search functionality
   useEffect(() => {
     const searchMedia = async (mediaType) => {
       if (searchQuery.trim().length > 2) {
@@ -432,7 +402,6 @@ export const MediaProvider = ({ children }) => {
         setSearchResults([...movieResults, ...tvResults]);
         setShowSearchResults(true);
 
-        // Track search in Firestore if user is logged in
         if (currentUser && searchQuery.trim().length > 3) {
           try {
             const searchHistoryRef = doc(db, "searchHistory", currentUser.uid);
@@ -446,7 +415,6 @@ export const MediaProvider = ({ children }) => {
 
             if (historyDoc.exists()) {
               const searches = historyDoc.data().items || [];
-              // Add to beginning and limit to 20 searches
               const updatedSearches = [newSearch, ...searches].slice(0, 20);
               await updateDoc(searchHistoryRef, { items: updatedSearches });
             } else {
@@ -502,7 +470,6 @@ export const MediaProvider = ({ children }) => {
     try {
       console.log("Fetching recommendations for", myList.length, "items");
 
-      // Format the list items for the prompt
       const formattedList = myList
         .map(
           (item) =>
@@ -514,7 +481,6 @@ export const MediaProvider = ({ children }) => {
 
       console.log("Formatted list for Gemini:", formattedList);
 
-      // Check if the API key is available
       if (!GEMINI_API_KEY) {
         console.error("Gemini API key is missing or undefined");
         throw new Error("Gemini API key not available");
