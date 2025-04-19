@@ -17,6 +17,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 
+const CONTRACT_ADDRESS = import.meta.env.VITE_CONTRACT_ADDRESS;
+
 const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
