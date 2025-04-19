@@ -163,19 +163,19 @@ export default function Landing() {
 
       {/* Hero Section with Autoplay Video */}
       <div className="relative h-screen flex items-center justify-center px-6">
-        {/* Video Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute inset-0 bg-black bg-opacity-70 z-10"></div>
-          <video
-            className="absolute w-full h-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            <source src="/videos/hero-background.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          {/* Background Image with Reduced Opacity */}
+          <img
+            src="https://wallpapercave.com/wp/wp11089675.jpg"
+            className="absolute w-full h-full object-cover opacity-40"
+            alt="Background"
+          />
+
+          {/* Top Gradient Overlay */}
+          <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black via-transparent"></div>
+
+          {/* Bottom Gradient Overlay */}
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-transparent"></div>
         </div>
 
         <div className="relative z-10 text-center max-w-4xl mx-auto">
