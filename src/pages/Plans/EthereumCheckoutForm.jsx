@@ -144,11 +144,9 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
     console.log("Plan info:", planInfo);
 
     try {
-      // First check if the document exists
       const userDocRef = doc(db, "Users", userId);
       const userDoc = await getDoc(userDocRef);
 
-      // Check if status is already true to prevent unnecessary updates
       if (userDoc.exists() && userDoc.data().status === true) {
         console.log("Status already true, skipping update");
         setStatusUpdateSuccess(true);
@@ -163,11 +161,9 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
       };
 
       if (userDoc.exists()) {
-        // Update existing document
         await updateDoc(userDocRef, updateData);
         console.log("User document updated successfully");
 
-        // Verify the update was successful
         const updatedDoc = await getDoc(userDocRef);
         if (updatedDoc.exists() && updatedDoc.data().status === true) {
           console.log("Status update verified successfully");
@@ -178,7 +174,6 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
           return false;
         }
       } else {
-        // Create new document if it doesn't exist
         await setDoc(userDocRef, {
           email: formData.email,
           userName: formData.name,
@@ -190,7 +185,6 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
         });
         console.log("User document created successfully");
 
-        // Verify the document was created with status true
         const newDoc = await getDoc(userDocRef);
         if (newDoc.exists() && newDoc.data().status === true) {
           console.log("Status update verified successfully");
@@ -207,13 +201,11 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
     }
   };
 
-  // For free plan, just handle registration
   const handleFreePlan = async () => {
     setLoading(true);
     setPaymentStatus("processing");
     setError(null);
 
-    // Verify user is authenticated
     if (!currentUser) {
       setError("You must be logged in to select a plan. Please log in first.");
       setLoading(false);
@@ -222,7 +214,6 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
     }
 
     try {
-      // Update user status in Firestore
       const success = await updateUserStatus(currentUser.uid, selectedPlan);
 
       if (success) {
@@ -246,26 +237,21 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
     setError(null);
 
     try {
-      // Create a new user with email and password
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
         formData.password
       );
 
-      // Update profile with name
       await updateProfile(userCredential.user, {
         displayName: formData.name,
       });
 
-      // Set current user
       setCurrentUser(userCredential.user);
 
-      // Proceed with subscription after signup
       if (selectedPlan.title === "Free") {
         handleFreePlan();
       } else {
-        // Show wallet connection UI
         toast.success(
           "Account created! Please connect your wallet to complete your subscription."
         );
@@ -281,13 +267,11 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Verify user is authenticated
     if (!currentUser) {
       setError("You must be logged in to select a plan. Please log in first.");
       return;
     }
 
-    // If it's the free plan, use a different handler
     if (selectedPlan.title === "Free") {
       handleFreePlan();
       return;
@@ -308,24 +292,19 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
     setError(null);
 
     try {
-      // Process payment through the smart contract
       const amountInWei = ethers.parseEther(contractEthAmount);
 
-      // If contract is not available, handle the error
       if (!contract) {
         throw new Error(
           "Contract not properly initialized. Using direct transfer instead."
         );
       }
 
-      // Try to use the contract first
       try {
-        // Call the processPayment function on the contract using ethers v6 syntax
         const tx = await contract.processPayment(selectedPlan.title, {
           value: amountInWei,
         });
 
-        // Wait for the transaction to be mined
         await tx.wait();
         console.log("Transaction hash:", tx.hash);
       } catch (contractError) {
@@ -334,11 +313,9 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
           contractError
         );
 
-        // Fallback: Direct transfer if contract fails
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
 
-        // Send ETH directly to the contract address
         const tx = await signer.sendTransaction({
           to: CONTRACT_ADDRESS,
           value: amountInWei,
@@ -348,10 +325,8 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
         console.log("Direct transfer hash:", tx.hash);
       }
 
-      // Payment successful
       setPaymentStatus("success");
 
-      // After payment success, update user status in Firestore
       const success = await updateUserStatus(currentUser.uid, selectedPlan);
 
       if (success) {
@@ -363,7 +338,6 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
         );
       }
 
-      // Store user data and subscription info in localStorage
       localStorage.setItem(
         "userSubscription",
         JSON.stringify({
