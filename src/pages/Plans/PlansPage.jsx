@@ -16,57 +16,14 @@ import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
+import Footer from "../../components/Footer/Footer";
+import Navbar from "../../components/Navbar/Navbar";
 
 const CONTRACT_ADDRESS =
   import.meta.env.VITE_CONTRACT_ADDRESS ||
   (import.meta.env.MODE === "development"
     ? "0xYourTestContractAddress"
     : undefined);
-
-const Logo = () => (
-  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    StreamSphere
-  </div>
-);
-
-// Navbar component
-const Navbar = () => (
-  <nav className="px-6 py-4 flex justify-between items-center">
-    <div className="flex items-center">
-      <Logo />
-    </div>
-    <div className="flex items-center space-x-4">
-      <a
-        href="/login"
-        className="text-purple-300 hover:text-white transition-colors"
-      >
-        Login
-      </a>
-      <a
-        href="/signup"
-        className="px-4 py-2 rounded-md bg-purple-600 hover:bg-purple-700 transition-colors"
-      >
-        Sign Up
-      </a>
-    </div>
-  </nav>
-);
-
-// Footer component
-const Footer = ({ marginTop }) => (
-  <footer className="py-8 px-6 bg-black" style={{ marginTop }}>
-    <div className="max-w-6xl mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-center">
-        <Logo />
-        <p className="text-gray-500">
-          © 2025 StreamSphere Streaming. All rights reserved.
-        </p>
-      </div>
-    </div>
-  </footer>
-);
-
-// Enhanced PlanCard component
 const PlanCard = ({
   title,
   price,
@@ -156,7 +113,6 @@ const PlanCard = ({
   );
 };
 
-// Enhanced Ethereum payment form component with smart contract integration
 const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -164,25 +120,22 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "", // Add password field for new account creation
+    password: "",
   });
   const [walletConnected, setWalletConnected] = useState(false);
-  const [paymentStatus, setPaymentStatus] = useState("idle"); // idle, processing, success, failed
+  const [paymentStatus, setPaymentStatus] = useState("idle");
   const [ethereumAddress, setEthereumAddress] = useState("");
   const [contract, setContract] = useState(null);
   const [contractEthAmount, setContractEthAmount] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [statusUpdateSuccess, setStatusUpdateSuccess] = useState(false);
-  const [authMode, setAuthMode] = useState("login"); // "login" or "signup"
-
-  // Check authentication state
+  const [authMode, setAuthMode] = useState("login");
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       console.log("Auth state changed:", user);
       setCurrentUser(user);
 
       if (user) {
-        // Pre-fill email from authenticated user
         setFormData((prev) => ({
           ...prev,
           email: user.email || "",
@@ -194,21 +147,16 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
     return () => unsubscribe();
   }, []);
 
-  // Connect to contract and get plan pricing - fixed for ethers v6 syntax
   useEffect(() => {
     const loadContractData = async () => {
       if (!walletConnected || !window.ethereum || !selectedPlan) return;
       if (selectedPlan.title === "Free") {
-        // No need to load contract data for free plan
         return;
       }
 
       try {
-        // Using ethers v6 syntax
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
-
-        // Check if CONTRACT_ADDRESS is valid
         if (
           !CONTRACT_ADDRESS ||
           CONTRACT_ADDRESS === "0x0000000000000000000000000000000000000000"
@@ -218,24 +166,20 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
 
         const subscriptionContract = new ethers.Contract(
           CONTRACT_ADDRESS,
-          SubscriptionPaymentABI.abi, // Add .abi to access the actual ABI array
+          SubscriptionPaymentABI.abi,
           signer
         );
 
         setContract(subscriptionContract);
 
         try {
-          // Get the plan details from the smart contract
           const planDetails = await subscriptionContract.getPlanDetails(
             selectedPlan.title
           );
-
-          // Convert the price from wei to ether for display
           const ethPrice = ethers.formatEther(planDetails.price);
           setContractEthAmount(ethPrice);
         } catch (contractErr) {
           console.error("Error getting plan details:", contractErr);
-          // Fallback pricing if contract call fails
           setContractEthAmount(
             selectedPlan.title === "Basic"
               ? "0.005"
@@ -249,8 +193,6 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
         setError(
           "Failed to load plan details from smart contract: " + err.message
         );
-
-        // Use fallback pricing if contract connection fails
         setContractEthAmount(
           selectedPlan.title === "Basic"
             ? "0.005"
@@ -277,7 +219,6 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
     if (window.ethereum) {
       try {
         setLoading(true);
-        // Request account access
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
@@ -294,8 +235,6 @@ const EthereumCheckoutForm = ({ selectedPlan, onBack }) => {
       );
     }
   };
-
-  // Function to update user status in Firestore
   const updateUserStatus = async (userId, planInfo) => {
     console.log("Updating user status for:", userId);
     console.log("Plan info:", planInfo);
@@ -805,7 +744,6 @@ export default function PlansPage() {
         "Watch on 1 device",
         "Limited content library",
         "Ad-supported",
-        "Basic 3D content samples",
       ],
       icon: Coffee,
       isFree: true,
@@ -818,7 +756,6 @@ export default function PlansPage() {
         "Good Video and sound quality",
         "Watch on any device",
         "Cancel anytime",
-        "Standard 3D content",
       ],
       icon: Zap,
     },
@@ -828,9 +765,9 @@ export default function PlansPage() {
       features: [
         "1080p Full HD",
         "Great Video and sound quality",
+        "Dolby Atmos 2.0",
         "Watch on 2 devices",
         "Cancel anytime",
-        "Advanced 3D content",
         "Ad-free experience",
       ],
       isPopular: true,
@@ -844,7 +781,7 @@ export default function PlansPage() {
         "Best Video and sound quality",
         "Watch on 4 devices",
         "Download & watch offline",
-        "Premium 3D and VR content",
+        "HBO Unlocked",
         "Early access to new releases",
         "Exclusive content",
       ],
@@ -876,8 +813,7 @@ export default function PlansPage() {
                 Choose Your Dimension
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-                Unlock the full potential of 3D streaming with our flexible
-                plans. Enjoy unlimited movies, TV shows, and immersive
+                Enjoy unlimited movies, TV shows, and immersive
                 experiences on any device.
               </p>
 
@@ -964,7 +900,7 @@ export default function PlansPage() {
         )}
       </main>
 
-      <Footer marginTop={selectedPlan ? "60px" : "80px"} />
+      <Footer/>
     </div>
   );
 }
