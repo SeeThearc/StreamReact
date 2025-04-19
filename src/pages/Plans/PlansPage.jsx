@@ -132,7 +132,6 @@ export default function PlansPage() {
     return () => unsubscribe();
   }, []);
 
-  // Check URL for registration redirect - fixed to prevent infinite loop
   useEffect(() => {
     if (hasShownWelcomeMessage) return;
 
@@ -140,13 +139,11 @@ export default function PlansPage() {
     const fromRegistration = urlParams.get("from");
 
     if (fromRegistration === "signup") {
-      // If coming from signup, show a welcome message or highlight the free plan
       toast.info("Please select a subscription plan to activate your account");
       setHasShownWelcomeMessage(true);
     }
   }, [hasShownWelcomeMessage]);
 
-  // Enhanced plans with free tier and more details
   const plans = [
     {
       title: "Free",
@@ -311,7 +308,6 @@ export default function PlansPage() {
           />
         )}
       </main>
-
       <Footer />
     </div>
   );
