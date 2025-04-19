@@ -5,61 +5,75 @@ import { useMedia } from "../../context/MediaContext";
 import Logo from "../../components/Logo/Logo";
 
 export default function Landing() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const moviesPerSlide = 3;
 
-  // Use the Media context
-  const { fetchMovies, setIsLoading, API_KEY, BASE_URL, playMedia } =
+  // Use the MediaContext
+  const { fetchMovies, playMedia, isInMyList, addToMyList, removeFromMyList } =
     useMedia();
 
-  // Fetch top rated movies from API
+  // Fetch top-rated movies from the API
   useEffect(() => {
-    const getTopRatedMovies = async () => {
+    const loadMovies = async () => {
       try {
-        setLoading(true);
+        // Fetch top-rated movies using the fetchMovies function from MediaContext
         const topRatedMovies = await fetchMovies(
-          "/movie/popular?language=en-US&page=1"
+          "/movie/top_rated?language=en-US&page=1"
         );
-        setMovies(topRatedMovies.slice(0, 10));
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching top rated movies:", err);
-        setError("Failed to load top rated movies");
+        // Limit to top 30 movies
+        setMovies(topRatedMovies.slice(0, 30));
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+      } finally {
         setLoading(false);
       }
     };
 
-    getTopRatedMovies();
+    loadMovies();
   }, [fetchMovies]);
+
+  // Calculate total number of slides
+  const totalSlides = Math.ceil(movies.length / moviesPerSlide);
 
   // Auto-scroll functionality
   useEffect(() => {
     if (movies.length === 0) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev === movies.length - 1 ? 0 : prev + 1));
+      setCurrentSlideIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(interval);
-  }, [movies.length]);
+  }, [movies.length, totalSlides]);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === movies.length - 1 ? 0 : prev + 1));
+    setCurrentSlideIndex((prev) => (prev === totalSlides - 1 ? 0 : prev + 1));
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? movies.length - 1 : prev - 1));
+    setCurrentSlideIndex((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
   };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Function to handle movie play
+  // Function to handle movie play using MediaContext
   const handlePlayMovie = (movie) => {
     playMedia(movie);
+  };
+
+  // Handle add/remove from list with stopping propagation
+  const handleAddToList = (movie, e) => {
+    e.stopPropagation();
+    addToMyList(movie);
+  };
+
+  const handleRemoveFromList = (movie, e) => {
+    e.stopPropagation();
+    removeFromMyList(movie);
   };
 
   return (
@@ -189,7 +203,7 @@ export default function Landing() {
       {/* Movie Slider Section */}
       <div className="py-16 px-4 relative overflow-hidden">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-          Top 10 Rated Movies
+          Top Rated Movies
         </h2>
 
         {/* Loading State */}
@@ -199,57 +213,105 @@ export default function Landing() {
           </div>
         )}
 
-        {/* Error State */}
-        {error && !loading && (
-          <div className="text-center text-red-400 mb-4">
-            <p>Error loading movies: {error}</p>
-          </div>
-        )}
-
-        {/* Movie Slider */}
+        {/* Movie Slider - Fixed */}
         {!loading && movies.length > 0 && (
-          <div className="relative max-w-6xl mx-auto">
+          <div className="relative mx-auto max-w-7xl">
             <div className="overflow-hidden">
               <div
                 className="flex transition-transform duration-500 ease-in-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                style={{
+                  transform: `translateX(-${currentSlideIndex * 100}%)`,
+                }}
               >
-                {movies.map((movie) => (
-                  <div key={movie.id} className="min-w-full">
-                    <div
-                      className="relative mx-4 rounded-xl overflow-hidden group transform transition-all duration-300 hover:scale-105 cursor-pointer"
-                      onClick={() => handlePlayMovie(movie)}
-                    >
-                      <img
-                        src={movie.image}
-                        alt={movie.title}
-                        className="w-full h-64 md:h-96 object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
+                {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                  <div key={slideIndex} className="min-w-full flex gap-4 px-4">
+                    {movies
+                      .slice(
+                        slideIndex * moviesPerSlide,
+                        (slideIndex + 1) * moviesPerSlide
+                      )
+                      .map((movie) => (
+                        <div
+                          key={movie.id}
+                          className="flex-1 min-w-0 max-w-[33.333%]"
+                        >
+                          <div
+                            className="relative rounded-xl overflow-hidden group transform transition-all duration-300 hover:scale-105 cursor-pointer aspect-[2/3] h-[50vh]"
+                            onClick={() => handlePlayMovie(movie)}
+                          >
+                            <img
+                              src={movie.image}
+                              alt={movie.title}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
 
-                      <div className="absolute bottom-0 left-0 p-6 w-full">
-                        <div className="flex justify-between items-end">
-                          <div>
-                            <h3 className="text-2xl md:text-3xl font-bold mb-2">
-                              {movie.title}
-                            </h3>
-                            <p className="text-sm text-gray-300">
-                              {movie.genres}
-                            </p>
-                          </div>
-                          <div className="bg-purple-600 px-3 py-1 rounded-lg font-bold">
-                            {movie.rating}
+                            <div className="absolute bottom-0 left-0 p-6 w-full">
+                              <div className="flex justify-between items-end">
+                                <div className="max-w-[80%]">
+                                  <h3 className="text-xl md:text-2xl font-bold mb-2 truncate">
+                                    {movie.title}
+                                  </h3>
+                                  <p className="text-sm text-gray-300 truncate">
+                                    {movie.genres}
+                                  </p>
+                                </div>
+                                <div className="bg-purple-600 px-3 py-1 rounded-lg font-bold">
+                                  {movie.rating || "N/A"}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Play button overlay */}
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="bg-purple-600 rounded-full p-4 transform transition-transform group-hover:scale-110">
+                                <Play size={32} />
+                              </div>
+                            </div>
+
+                            {/* My List button */}
+                            <div className="absolute top-4 right-4">
+                              {isInMyList(movie) ? (
+                                <button
+                                  className="bg-purple-600 rounded-full p-2 opacity-70 hover:opacity-100"
+                                  onClick={(e) =>
+                                    handleRemoveFromList(movie, e)
+                                  }
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="white"
+                                    stroke="white"
+                                    strokeWidth="2"
+                                  >
+                                    <path d="M5 12h14" />
+                                  </svg>
+                                </button>
+                              ) : (
+                                <button
+                                  className="bg-purple-600 rounded-full p-2 opacity-70 hover:opacity-100"
+                                  onClick={(e) => handleAddToList(movie, e)}
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="white"
+                                    strokeWidth="2"
+                                  >
+                                    <path d="M12 5v14M5 12h14" />
+                                  </svg>
+                                </button>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-
-                      {/* Play button overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="bg-purple-600 rounded-full p-4 transform transition-transform group-hover:scale-110">
-                          <Play size={32} />
-                        </div>
-                      </div>
-                    </div>
+                      ))}
                   </div>
                 ))}
               </div>
@@ -271,12 +333,14 @@ export default function Landing() {
 
             {/* Indicators */}
             <div className="flex justify-center mt-6 space-x-2">
-              {movies.map((_, idx) => (
+              {Array.from({ length: totalSlides }).map((_, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setCurrentSlide(idx)}
+                  onClick={() => setCurrentSlideIndex(idx)}
                   className={`w-3 h-3 rounded-full transition-all ${
-                    idx === currentSlide ? "bg-purple-500 w-6" : "bg-gray-600"
+                    currentSlideIndex === idx
+                      ? "bg-purple-500 w-6"
+                      : "bg-gray-600"
                   }`}
                 />
               ))}
