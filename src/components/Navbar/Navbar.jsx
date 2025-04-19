@@ -1,8 +1,4 @@
-const Logo = () => (
-  <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-    StreamSphere
-  </div>
-);
+import Logo from "../Logo/Logo";
 const Navbar = () => (
   <nav className="px-6 py-4 flex justify-between items-center">
     <div className="flex items-center">
