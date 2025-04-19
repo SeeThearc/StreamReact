@@ -379,7 +379,7 @@ export default function Landing() {
               </div>
               <h3 className="text-xl font-bold mb-3">Cloud Streaming</h3>
               <p className="text-gray-400">
-                Stream high-quality 3D content with zero buffering on any
+                Stream high-quality content with zero buffering on any
                 device, anywhere.
               </p>
             </div>
@@ -403,7 +403,7 @@ export default function Landing() {
               </div>
               <h3 className="text-xl font-bold mb-3">Multi-Device Access</h3>
               <p className="text-gray-400">
-                Enjoy your content on TV, desktop, tablet, VR headsets, or
+                Enjoy your content on TV, desktop, tablet, or
                 mobile with seamless transitions.
               </p>
             </div>
