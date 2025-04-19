@@ -11,15 +11,12 @@ export default function Landing() {
   const [loading, setLoading] = useState(true);
   const moviesPerSlide = 3;
 
-  // Use the MediaContext
   const { fetchMovies, playMedia, isInMyList, addToMyList, removeFromMyList } =
     useMedia();
 
-  // Fetch top-rated movies from the API
   useEffect(() => {
     const loadMovies = async () => {
       try {
-        // Fetch top-rated movies using the fetchMovies function from MediaContext
         const topRatedMovies = await fetchMovies(
           "/movie/top_rated?language=en-US&page=1"
         );
@@ -35,10 +32,8 @@ export default function Landing() {
     loadMovies();
   }, [fetchMovies]);
 
-  // Calculate total number of slides
   const totalSlides = Math.ceil(movies.length / moviesPerSlide);
 
-  // Auto-scroll functionality
   useEffect(() => {
     if (movies.length === 0) return;
 
@@ -60,12 +55,10 @@ export default function Landing() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Function to handle movie play using MediaContext
   const handlePlayMovie = (movie) => {
     playMedia(movie);
   };
 
-  // Handle add/remove from list with stopping propagation
   const handleAddToList = (movie, e) => {
     e.stopPropagation();
     addToMyList(movie);
@@ -78,11 +71,9 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black to-purple-900 text-white overflow-hidden">
-      {/* Navigation */}
       <nav className="relative z-50 px-6 py-4 flex justify-between items-center">
         <Logo />
 
-        {/* Mobile menu button */}
         <button className="md:hidden" onClick={toggleMenu}>
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -116,7 +107,6 @@ export default function Landing() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-black bg-opacity-90 flex flex-col items-center justify-center space-y-8 text-xl">
           <button className="absolute top-4 right-6" onClick={toggleMenu}>
@@ -158,20 +148,16 @@ export default function Landing() {
         </div>
       )}
 
-      {/* Hero Section with Autoplay Video */}
       <div className="relative h-screen flex items-center justify-center px-6">
         <div className="absolute inset-0 z-0 overflow-hidden">
-          {/* Background Image with Reduced Opacity */}
           <img
             src="https://wallpapercave.com/wp/wp11089675.jpg"
             className="absolute w-full h-full object-cover opacity-40"
             alt="Background"
           />
 
-          {/* Top Gradient Overlay */}
           <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black via-transparent"></div>
 
-          {/* Bottom Gradient Overlay */}
           <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black via-transparent"></div>
         </div>
 
@@ -200,20 +186,17 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* Movie Slider Section */}
       <div className="py-16 px-4 relative overflow-hidden">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
           Top Rated Movies
         </h2>
 
-        {/* Loading State */}
         {loading && (
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500"></div>
           </div>
         )}
 
-        {/* Movie Slider - Fixed */}
         {!loading && movies.length > 0 && (
           <div className="relative mx-auto max-w-7xl">
             <div className="overflow-hidden">
@@ -262,14 +245,12 @@ export default function Landing() {
                               </div>
                             </div>
 
-                            {/* Play button overlay */}
                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                               <div className="bg-purple-600 rounded-full p-4 transform transition-transform group-hover:scale-110">
                                 <Play size={32} />
                               </div>
                             </div>
 
-                            {/* My List button */}
                             <div className="absolute top-4 right-4">
                               {isInMyList(movie) ? (
                                 <button
@@ -317,7 +298,6 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Navigation buttons */}
             <button
               onClick={prevSlide}
               className="absolute top-1/2 left-2 -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-70 transition-all z-10"
@@ -331,7 +311,6 @@ export default function Landing() {
               <ChevronRight size={24} />
             </button>
 
-            {/* Indicators */}
             <div className="flex justify-center mt-6 space-x-2">
               {Array.from({ length: totalSlides }).map((_, idx) => (
                 <button
@@ -349,7 +328,6 @@ export default function Landing() {
         )}
       </div>
 
-      {/* Features Section */}
       <div id="features" className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
@@ -434,7 +412,6 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* Call To Action */}
       <div className="py-16 px-4 bg-gradient-to-r from-purple-900 to-blue-900">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
