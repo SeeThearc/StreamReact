@@ -191,7 +191,7 @@ const HomePage = () => {
               }}
             >
               <div className="banner-content">
-                <h2>
+                <h2 className="text-white bg-purple-600">
                   {featuredMovie.mediaType === "movie"
                     ? "Featured Movie"
                     : "Featured Show"}

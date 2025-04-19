@@ -9,7 +9,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 50px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
   position: fixed;
   width: 100%;
   top: 0;
@@ -78,13 +78,13 @@
 }
 
 .banner::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent 70%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 70%);
   z-index: 1;
 }
 
@@ -93,12 +93,6 @@
   padding-bottom: 50px;
   max-width: 600px;
   z-index: 2;
-}
-
-.banner-content h2 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #ccc;
 }
 
 .banner-content h1 {
@@ -118,7 +112,8 @@
   margin-top: 20px;
 }
 
-.play-btn, .info-btn {
+.play-btn,
+.info-btn {
   padding: 10px 20px;
   font-size: 16px;
   border: none;
@@ -137,7 +132,8 @@
   color: white;
 }
 
-.play-btn:hover, .info-btn:hover {
+.play-btn:hover,
+.info-btn:hover {
   background: rgb(146, 17, 155);
   color: white;
 }
