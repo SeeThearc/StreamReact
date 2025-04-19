@@ -10,15 +10,11 @@ import { auth, db } from "../firebase/firebase";
 import { toast } from "react-toastify";
 import { getDoc, setDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-
-// Logo component that matches our existing branding
 const Logo = () => (
   <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
     StreamSphere
   </div>
 );
-
-// Button component matching our design system
 const Button = ({ type, className, children, onClick }) => (
   <button
     type={type}
@@ -28,8 +24,6 @@ const Button = ({ type, className, children, onClick }) => (
     {children}
   </button>
 );
-
-// Navbar component
 const Navbar = () => (
   <nav className="px-6 py-4 flex justify-between items-center">
     <div className="flex items-center">
@@ -78,24 +72,18 @@ export default function Login() {
         password
       );
       const user = userCredential.user;
-
-      // Check user status in Firestore
       const userDoc = await getDoc(doc(db, "Users", user.uid));
       if (!userDoc.exists()) {
-        // User doesn't exist in Firestore at all
         await auth.signOut();
         toast.error("Account not found. Please sign up first.");
         navigate("/signup");
         return;
       } else if (userDoc.exists() && userDoc.data().status === false) {
-        // User exists but hasn't selected a plan
         await auth.signOut();
         toast.error("Please complete plan selection to activate your account");
         navigate("/plans?from=signup");
         return;
       }
-
-      // If we get here, login was successful
       toast.success("Login successful!");
       navigate("/home");
     } catch (error) {
@@ -104,43 +92,36 @@ export default function Login() {
     }
   };
 
-  // Similarly for the Google login
+
   const googleLogin = async () => {
     const provider = new GoogleAuthProvider();
-
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Check if user exists in Firestore
       const userDoc = await getDoc(doc(db, "Users", user.uid));
 
       if (!userDoc.exists()) {
-        // User doesn't exist in Firestore at all
         await auth.signOut();
         toast.error("Account not found. Please sign up first.");
         navigate("/signup");
         return;
       } else if (userDoc.exists() && userDoc.data().status === false) {
-        // User exists but hasn't selected a plan
         await auth.signOut();
         toast.error("Please complete plan selection to activate your account");
         navigate("/plans?from=signup");
         return;
       }
 
-      // Existing user - check status
       if (!userDoc.data().status) {
-        // If status is false, sign out and redirect to plans
         await auth.signOut();
         toast.error("Please complete plan selection to activate your account");
-        navigate("/plans?from=signup"); // Use navigate instead
+        navigate("/plans?from=signup"); 
         return;
       }
 
-      // Status is true - proceed with login
       toast.success("User logged in successfully!");
-      navigate("/home"); // Use navigate instead
+      navigate("/home");
     } catch (error) {
       console.error("Google Sign-In Error:", error);
       toast.error(error.message || "Google login failed.");
