@@ -20,7 +20,6 @@ export default function Landing() {
         const topRatedMovies = await fetchMovies(
           "/movie/top_rated?language=en-US&page=1"
         );
-        // Limit to top 30 movies
         setMovies(topRatedMovies.slice(0, 30));
       } catch (error) {
         console.error("Error fetching movies:", error);
