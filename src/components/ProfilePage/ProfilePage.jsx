@@ -116,7 +116,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="profile-page">
+    <div className="profile-page min-h-screen bg-gradient-to-br from-black to-purple-900 text-white overflow-hidden">
       <Header />
 
       <div className="content-container">
@@ -130,10 +130,7 @@ const ProfilePage = () => {
               <div className="profile-header">
                 <div className="profile-image">
                   <img
-                    src={
-                      userProfile?.photoURL ||
-                      "StreamReactsrcassetsimagesdef_prof.png"
-                    }
+                    src="src\assets\images\pro.jpeg"
                     alt="Profile"
                   />
                 </div>

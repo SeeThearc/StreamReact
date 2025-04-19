@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useMedia } from "../../context/MediaContext"; // Make sure to import the context
+import { useMedia } from "../../context/MediaContext";
+import "./header.css"
 
 const Header = ({
   searchQuery,
@@ -11,26 +12,32 @@ const Header = ({
   playShow,
   searchPlaceholder = "Search content...",
 }) => {
+  const searchContainerRef = useRef(null);
   const searchResultsRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser, userProfile } = useMedia(); // Get user data from context
+  const { currentUser, userProfile, addToMyList } = useMedia();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        searchResultsRef.current &&
-        !searchResultsRef.current.contains(event.target)
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target)
       ) {
+
         if (typeof showSearchResults === "function") {
           showSearchResults(false);
+        }
+
+        if (searchQuery) {
+          onSearchChange({ target: { value: "" } });
         }
       }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showSearchResults]);
+  }, [showSearchResults, searchQuery, onSearchChange]);
 
   const redirectToSignOut = () => {
     navigate("/");
@@ -43,7 +50,6 @@ const Header = ({
   const getActiveClass = (path) =>
     location.pathname === path ? "head-opt active" : "head-opt";
 
-  // Show user profile menu when avatar is clicked
   const [showProfileMenu, setShowProfileMenu] = React.useState(false);
 
   const profileMenuRef = useRef(null);
@@ -61,6 +67,18 @@ const Header = ({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleAddToList = (item, e) => {
+    e.stopPropagation();
+    
+    const formattedItem = {
+      ...item,
+      genres: item.genres || `${item.mediaType === 'movie' ? 'Movie' : 'TV Show'} (${item.year})`,
+      duration: item.duration || item.year
+    };
+    
+    addToMyList(formattedItem);
+  };
 
   return (
     <div className="header">
@@ -86,7 +104,7 @@ const Header = ({
       </div>
 
       <div className="head-right">
-        <div className="search-container">
+        <div className="search-container" ref={searchContainerRef}>
           <form onSubmit={onSearchSubmit} className="search-form">
             <input
               type="text"
@@ -122,6 +140,13 @@ const Header = ({
                       {item.duration} • {item.genres}
                     </p>
                   </div>
+                  <button 
+                    className="add-to-list-btn"
+                    onClick={(e) => handleAddToList(item, e)}
+                    title="Add to My List"
+                  >
+                    <i className="fa-solid fa-plus"></i>
+                  </button>
                 </div>
               ))}
             </div>
@@ -140,7 +165,7 @@ const Header = ({
             onClick={() => setShowProfileMenu(!showProfileMenu)}
           >
             <img
-              src={userProfile?.photoURL || "/assets/images/profile.png"}
+              src="src\assets\images\pro.jpeg"
               alt="profile"
               height="40px"
               className="pro"

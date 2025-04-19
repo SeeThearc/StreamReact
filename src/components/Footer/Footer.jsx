@@ -99,7 +99,7 @@ const Footer = ({ marginTop }) => {
 
             <div>
               <h3 className="text-lg font-bold mb-4">Connect</h3>
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 modif">
                 <a
                   href="#twitter"
                   className="text-gray-400 hover:text-white transition-colors"
