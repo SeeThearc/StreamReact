@@ -7,12 +7,13 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDoLZAW_w9L7m7EYJ8kkmp94JvLC_Iu34E",
-  authDomain: "stream-sphere-52fe6.firebaseapp.com",
-  projectId: "stream-sphere-52fe6",
-  storageBucket: "stream-sphere-52fe6.firebasestorage.app",
-  messagingSenderId: "1008287739310",
-  appId: "1:1008287739310:web:43a3cb3952ef5b39cbec3f",
+  apiKey: "AIzaSyD5bZj6eiY9e3iCV2AAHnYnsFwbCprivg8",
+  authDomain: "shpere-v2.firebaseapp.com",
+  projectId: "shpere-v2",
+  storageBucket: "shpere-v2.firebasestorage.app",
+  messagingSenderId: "918549817924",
+  appId: "1:918549817924:web:13532cab85639547f56a11",
+  measurementId: "G-KDZZGKVFBX"
 };
 
 // Initialize Firebase
